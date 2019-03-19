@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="hero is-primary">
+    <section class="hero is-dark">
       <div class="hero-body">
         <div class="container">
           <h3 class="title">
@@ -20,7 +20,7 @@
               <ul class="menu-list">
                 <li>
                   <nuxt-link
-                    :to="`/project/${$route.params.id}`"
+                    :to="`/${$route.params.id}`"
                     active-class="is-active"
                     exact
                   >
@@ -29,13 +29,13 @@
                 </li>
                 <li>
                   <nuxt-link
-                    :to="`/project/${$route.params.id}/recuperar`"
+                    :to="`/${$route.params.id}/recuperar`"
                     active-class="is-active"
                   >
                     Recuperar archivos
                   </nuxt-link>
                   <nuxt-link
-                    :to="`/project/${$route.params.id}/clasificar`"
+                    :to="`/${$route.params.id}/clasificar`"
                     active-class="is-active"
                   >
                     Clasificar archivos

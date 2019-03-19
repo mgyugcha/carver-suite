@@ -10,6 +10,7 @@
               v-model="data.carver"
               placeholder="Seleccionar el carver a usar"
               expanded
+              required
             >
               <option
                 v-for="carver in options.carvers"
@@ -29,6 +30,7 @@
               v-model="data.drive"
               placeholder="Seleccionar el dispositivo"
               expanded
+              required
             >
               <option
                 v-for="drive in drives"
@@ -41,10 +43,18 @@
           </b-field>
         </div>
         <div class="column">
-          <b-field
-            label="Seleccionar carpeta de salida"
-          >
-            <b-input v-model="data.outputdir" />
+          <b-field label="Carpeta de salida">
+            <b-field class="file is-fullwidth">
+              <b-upload v-model="diroutput" webkitdirectory>
+                <a class="button">
+                  <b-icon icon="folder-upload" />
+                  <span>Seleccionar</span>
+                </a>
+              </b-upload>
+              <span v-if="diroutput" class="file-name">
+                {{ diroutput.name }}
+              </span>
+            </b-field>
           </b-field>
         </div>
       </div>
@@ -58,7 +68,7 @@
         </nuxt-link>
         <button
           :class="{ 'is-loading': !!running }"
-          class="button is-primary"
+          class="button is-dark"
         >
           Recuperar datos
         </button>
@@ -135,9 +145,8 @@ export default {
       carvers: [],
       drives: [],
     },
-    data: {
-      outputdir: '/home/mgyugcha/Documents/Projects/carver-test/',
-    },
+    diroutput: undefined,
+    data: { },
     running: undefined,
     interval: undefined,
     message: '',
@@ -166,14 +175,21 @@ export default {
     this.data.outputdir = project.outputdir || this.data.outputdir
   },
   methods: {
-    async submit () {
+    submit () {
+      if (!this.diroutput) {
+        return this.$toast.open({
+          message: 'Ingrese una carpeta de salida',
+          type: 'is-warning'
+        })
+      }
       try {
-        await this.$axios.$post(`/api/projects/${this.id}/recover`, this.data)
-        this.$snackbar.open('Se está corriendo el carver en segundo plano')
-        await this.$store.dispatch('project/load', this.id)
-        this.message = ''
-        this.running = true
-        this.interval = setInterval(this.checkProgress, 1000)
+        console.log('llego aca')
+        // await this.$axios.$post(`/api/projects/${this.id}/recover`, this.data)
+        // this.$snackbar.open('Se está corriendo el carver en segundo plano')
+        // await this.$store.dispatch('project/load', this.id)
+        // this.message = ''
+        // this.running = true
+        // this.interval = setInterval(this.checkProgress, 1000)
       } catch (err) {
         this.$toast.open({ message: err.message, type: 'is-danger' })
         console.error(err)

@@ -126,7 +126,7 @@
       </div>
     </div>
     <div class="buttons">
-      <button class="button is-primary">
+      <button class="button is-dark">
         Guardar
       </button>
     </div>
@@ -136,12 +136,7 @@
 <script>
 export default {
   data: () => ({
-    data: {
-      // fechaDeIngreso: new Date(),
-      // horaDeIngreso: new Date(),
-      // fechaDeEntrega: new Date(),
-      // horaDeEntrega: new Date(),
-    },
+    data: { },
   }),
   async created () {
     try {

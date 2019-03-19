@@ -9,7 +9,10 @@
         <div class="column">
           <label class="label">Seleccionar carpeta de entrada</label>
           <b-field class="file is-fullwidth">
-            <b-upload v-model="dirinput" webkitdirectory>
+            <b-upload
+              v-model="dirinput"
+              webkitdirectory
+            >
               <a class="button">
                 <b-icon icon="upload" />
                 <span>Seleccione la carpeta de entrada</span>
@@ -21,10 +24,20 @@
           </b-field>
         </div>
         <div class="column">
-          <b-field
-            label="Seleccionar carpeta de salida"
-          >
-            <b-input v-model="data.outputdir" />
+          <label class="label">Seleccionar carpeta de salida</label>
+          <b-field class="file is-fullwidth">
+            <b-upload
+              v-model="diroutput"
+              webkitdirectory
+            >
+              <a class="button">
+                <b-icon icon="upload" />
+                <span>Seleccione la carpeta de entrada</span>
+              </a>
+            </b-upload>
+            <span v-if="diroutput" class="file-name">
+              {{ diroutput.name }}
+            </span>
           </b-field>
         </div>
       </div>
@@ -57,7 +70,7 @@
       <div class="buttons">
         <button
           :class="{ 'is-loading': !!running }"
-          class="button is-primary"
+          class="button is-dark"
         >
           Clasificar archivos
         </button>
@@ -102,6 +115,7 @@ export default {
   },
   data: () => ({
     dirinput: undefined,
+    diroutput: undefined,
     data: {
       inputdir: '/home/mgyugcha/Documents/Projects/carver-test/',
       outputdir: '/home/mgyugcha/Documents/Projects/carver-output/',

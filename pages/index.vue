@@ -43,10 +43,10 @@
             <b-table-column field="titulo" label="Título">
               {{ props.row.titulo }}
             </b-table-column>
-            <b-table-column field="options" label="Opciones">
-              <div class="buttons has-addons">
+            <b-table-column centered field="options" label="Opciones">
+              <div class="buttons has-addons is-centered">
                 <nuxt-link
-                  :to="`/project/${props.row.id}`"
+                  :to="`/${props.row.id}`"
                   class="button is-small"
                 >
                   <b-icon
@@ -91,6 +91,7 @@ export default {
     },
     add () {
       this.$dialog.prompt({
+        type: 'is-dark',
         message: 'Nombre del proyecto',
         confirmText: 'Añadir',
         cancelText: 'Cancelar',
@@ -101,7 +102,7 @@ export default {
     async sendToServer (titulo) {
       try {
         const { id } = await this.$axios.$post('/api/projects', { titulo })
-        this.$router.push(`/project/${id}`)
+        this.$router.push(`/${id}`)
       } catch (err) {
         this.$toast.open({ message: err.message, type: 'is-danger' })
       }
