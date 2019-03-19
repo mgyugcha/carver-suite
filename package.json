@@ -1,0 +1,58 @@
+{
+  "name": "carvers-suite",
+  "version": "1.0.0",
+  "description": "Nuxt + Electron",
+  "author": "Michael Yugcha <mgyugcha@gmail.com>",
+  "private": true,
+  "main": "main.js",
+  "build": {
+    "appId": "me.mgyugcha.carvers-suite",
+    "directories": {
+      "buildResources": "static"
+    }
+  },
+  "scripts": {
+    "dev": "cross-env NODE_ENV=DEV electron .",
+    "build": "nuxt build && electron-builder"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.4.1",
+    "awesome-unoconv": "^1.0.1",
+    "bluebird": "^3.5.3",
+    "body-parser": "^1.18.3",
+    "command-exists": "^1.2.8",
+    "docxtemplater": "^3.9.9",
+    "drivelist": "^7.0.1",
+    "express": "^4.16.4",
+    "ffmpeg": "0.0.4",
+    "file-type": "^10.8.0",
+    "imagemagick": "^0.1.3",
+    "jszip": "^2.6.1",
+    "moment": "^2.24.0",
+    "nuxt": "^1.4.0",
+    "nuxt-buefy": "^0.3.4",
+    "pdf-parse": "^1.1.1",
+    "read-chunk": "^3.0.0",
+    "recursive-readdir": "^2.2.2",
+    "sqlite3": "^4.0.6",
+    "vue-google-charts": "^0.3.2"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config": "0.0.1",
+    "babel-eslint": "^10.0.1",
+    "cross-env": "^5.1.4",
+    "electron": "2.0.0-beta.7",
+    "electron-builder": "^20.8.1",
+    "electron-devtools-installer": "^2.2.3",
+    "eslint": "^5.15.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.3.2",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^5.2.2"
+  }
+}
