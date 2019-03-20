@@ -1,9 +1,9 @@
+const fs = require('fs')
+const path = require('path')
 const pdf = require('pdf-parse')
 const ffmpeg = require('ffmpeg')
 const unoconv = require('awesome-unoconv')
-const fs = require('fs')
-const path = require('path')
-const Promise = require("bluebird")
+const Promise = require('bluebird')
 const recursive = require('recursive-readdir')
 const readChunk = require('read-chunk')
 const fileType = require('file-type')
@@ -59,52 +59,52 @@ function check_file (file, type, outputdir, statistics) {
     const databuffer = fs.readFileSync(file)
 
     switch (ext) {
-    case 'doc':
-    case 'docx':
-    case 'odt':
-    case 'odt':
-    case 'xls':
-    case 'xlsx':
-    case 'ods':
-    case 'ppt':
-    case 'pptx':
-    case 'odp':
-      unoconv
-        .convert(file, { buffer: true, format: 'html' })
-        .then(good)
-        .catch(bad)
-      break
-    case 'pdf':
-      pdf(databuffer).then(good).catch(bad)
-      break
-    case 'jpg':
-    case 'png':
-    case 'gif':
-    case 'bmp':
-    case 'jpeg':
-      im.identify(file, (err, data) => {
-        if (err) return bad()
-        good()
-      })
-      break
-    case 'mp3':
-    case 'm4a':
-    case 'acc':
-    case 'wma':
-    case 'avi':
-    case 'wmv':
-    case '3gp':
-    case 'ogg':
-    case 'mp4':
-    case 'mov':
-    case 'webm':
-      (new ffmpeg(file)).then(good, bad)
-      break
-    default:
+      case 'doc':
+      case 'docx':
+      case 'odt':
+      case 'odt':
+      case 'xls':
+      case 'xlsx':
+      case 'ods':
+      case 'ppt':
+      case 'pptx':
+      case 'odp':
+        unoconv
+          .convert(file, { buffer: true, format: 'html' })
+          .then(good)
+          .catch(bad)
+        break
+      case 'pdf':
+        pdf(databuffer).then(good).catch(bad)
+        break
+      case 'jpg':
+      case 'png':
+      case 'gif':
+      case 'bmp':
+      case 'jpeg':
+        im.identify(file, (err, data) => {
+          if (err) return bad()
+          good()
+        })
+        break
+      case 'mp3':
+      case 'm4a':
+      case 'acc':
+      case 'wma':
+      case 'avi':
+      case 'wmv':
+      case '3gp':
+      case 'ogg':
+      case 'mp4':
+      case 'mov':
+      case 'webm':
+        (new ffmpeg(file)).then(good, bad)
+        break
+      default:
       // console.log(file, ext)
-      statistics.unknown++
-      resolve()
-      break
+        statistics.unknown++
+        resolve()
+        break
     }
   })
 }

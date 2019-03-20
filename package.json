@@ -13,11 +13,13 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=DEV electron .",
-    "build": "nuxt build && electron-builder"
+    "build": "nuxt build && electron-builder",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.4.1",
     "awesome-unoconv": "^1.0.1",
+    "bayes-server": "^8.1.0",
     "bluebird": "^3.5.3",
     "body-parser": "^1.18.3",
     "command-exists": "^1.2.8",

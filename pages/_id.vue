@@ -12,7 +12,7 @@
     <section class="section">
       <div class="container">
         <div class="columns">
-          <div class="column is-narrow">
+          <div class="column is-3">
             <aside class="menu">
               <p class="menu-label">
                 Navegación
@@ -29,11 +29,21 @@
                 </li>
                 <li>
                   <nuxt-link
+                    :to="`/${$route.params.id}/form`"
+                    active-class="is-active"
+                  >
+                    Formulario
+                  </nuxt-link>
+                </li>
+                <li>
+                  <nuxt-link
                     :to="`/${$route.params.id}/recuperar`"
                     active-class="is-active"
                   >
                     Recuperar archivos
                   </nuxt-link>
+                </li>
+                <li>
                   <nuxt-link
                     :to="`/${$route.params.id}/clasificar`"
                     active-class="is-active"

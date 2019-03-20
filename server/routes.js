@@ -1,15 +1,15 @@
+const path = require('path')
+const Events = require('events')
 const moment = require('moment')
 const JSZip = require('jszip')
 const Docxtemplater = require('docxtemplater')
-const path = require('path')
 const sorter = require('./sorter')
-const Events = require('events')
 const spawn = require('child_process').spawn
 const express = require('express')
 const router = express.Router()
 const drivelist = require('drivelist')
 const sqlite3 = require('sqlite3').verbose()
-const db = new sqlite3.Database(':memory:')
+const db = new sqlite3.Database(__dirname + '/carvers-suite.db')
 const commandExists = require('command-exists')
 const fs = require('fs')
 
@@ -102,7 +102,12 @@ router.route('/projects/:id/recover')
  WHERE id=?`
     db.run(sql, [req.body.carver, req.body.outputdir, id], error => {
       if (error) return next(error)
-      const args = [req.body.drive, '-o', req.body.outputdir]
+      let args
+      if (req.body.drive === 'scalpel') {
+        args = [req.body.drive, '-o', req.body.outputdir]
+      } else {
+        args = ['-t', 'all', '-i', req.body.drive, '-o', req.body.outputdir]
+      }
       const child = spawn(req.body.carver, args)
 
       child.on('close', code => {
@@ -200,12 +205,10 @@ router.post('/projects/:id/informe', (req, res, next) => {
     row.horaDeIngreso = getHora(row.horaDeIngreso)
     row.fechaDeEntrega = getFecha(row.fechaDeEntrega)
     row.horaDeEntrega = getHora(row.horaDeEntrega)
-    console.log(row)
     doc.setData(row)
     try {
       doc.render()
-    }
-    catch (error) {
+    } catch (error) {
       const e = {
         message: error.message,
         name: error.name,
@@ -215,9 +218,10 @@ router.post('/projects/:id/informe', (req, res, next) => {
       console.error(JSON.stringify({ error: e }))
       res.status(400).send('No se pudo generar el informe')
     }
-    const buf = doc.getZip().generate({type: 'nodebuffer'})
-    fs.writeFileSync(path.resolve(req.body.outputdir, 'informe.docx'), buf)
-    res.send('informe generado')
+    const fileinforme = path.resolve(row.outputFolderSorter, 'informe.docx')
+    const buf = doc.getZip().generate({ type: 'nodebuffer' })
+    fs.writeFileSync(fileinforme, buf)
+    res.send(fileinforme)
   })
 })
 

@@ -46,14 +46,13 @@ async function start () {
   function createWindow () {
     console.log('llego aca el mierda')
     // Create the browser window.
-    let win = new BrowserWindow({})
+    const win = new BrowserWindow({})
     win.maximize()
     // and load the index.html of the app.
     win.loadURL(_NUXT_URL_)
     // win.loadFile('index.html')
   }
   appe.on('ready', createWindow)
-
 
   // let win = null
   // const electron = require('electron')

@@ -175,7 +175,7 @@ export default {
     this.data.outputdir = project.outputdir || this.data.outputdir
   },
   methods: {
-    submit () {
+    async submit () {
       if (!this.diroutput) {
         return this.$toast.open({
           message: 'Ingrese una carpeta de salida',
@@ -183,13 +183,13 @@ export default {
         })
       }
       try {
-        console.log('llego aca')
-        // await this.$axios.$post(`/api/projects/${this.id}/recover`, this.data)
-        // this.$snackbar.open('Se está corriendo el carver en segundo plano')
-        // await this.$store.dispatch('project/load', this.id)
-        // this.message = ''
-        // this.running = true
-        // this.interval = setInterval(this.checkProgress, 1000)
+        this.data.outputdir = this.diroutput.path
+        await this.$axios.$post(`/api/projects/${this.id}/recover`, this.data)
+        this.$snackbar.open('Se está corriendo el carver en segundo plano')
+        await this.$store.dispatch('project/load', this.id)
+        this.message = ''
+        this.running = true
+        this.interval = setInterval(this.checkProgress, 1000)
       } catch (err) {
         this.$toast.open({ message: err.message, type: 'is-danger' })
         console.error(err)
@@ -205,6 +205,9 @@ export default {
           this.running = false
           await this.$store.dispatch('project/load', this.id)
           clearInterval(this.interval)
+          if (!this.runningHasProblems) {
+            this.$router.push(`/${this.id}/clasificar`)
+          }
         }
       } catch (err) {
         await this.remove()

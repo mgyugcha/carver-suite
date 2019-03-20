@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import { shell } from 'electron'
 import { GChart } from 'vue-google-charts'
 
 export default {
@@ -116,10 +117,6 @@ export default {
   data: () => ({
     dirinput: undefined,
     diroutput: undefined,
-    data: {
-      inputdir: '/home/mgyugcha/Documents/Projects/carver-test/',
-      outputdir: '/home/mgyugcha/Documents/Projects/carver-output/',
-    },
     running: false,
     runningInforme: false,
     interval: undefined,
@@ -127,6 +124,12 @@ export default {
     statistics: undefined,
   }),
   computed: {
+    body () {
+      return {
+        inputdir: this.dirinput ? this.dirinput.path : undefined,
+        outputdir: this.diroutput ? this.diroutput.path : undefined,
+      }
+    },
     chartData () {
       const positivos = this.statistics ? this.statistics.good : 0
       const negativos = this.statistics ? this.statistics.bad : 0
@@ -156,7 +159,6 @@ export default {
     await this.$store.dispatch('project/load', this.id)
     // default data
     const project = this.$store.state.project.data
-    this.outputdir = project.outputFolderSorter || '/home/mgyugcha/Documents/Projects/carver-output/'
     this.statistics = JSON.parse(project.statistics) || undefined
     this.percent = project.percent || 0
   },
@@ -167,7 +169,7 @@ export default {
         this.percent = 0
         this.statistics = undefined
         this.running = true
-        await this.$axios.$post(this.rest, this.data)
+        await this.$axios.$post(this.rest, this.body)
         this.interval = setInterval(this.checkPercent, 500)
       } catch (err) {
         this.$toast.open({ message: err.message, type: 'is-danger' })
@@ -204,7 +206,9 @@ export default {
     async generarInforme () {
       try {
         this.runningInforme = true
-        await this.$axios.$post(`/api/projects/${this.id}/informe`, this.data)
+        const informe =
+          await this.$axios.$post(`/api/projects/${this.id}/informe`, this.body)
+        shell.openItem(informe)
         this.$snackbar.open('El informe se generó correctamente')
       } catch (err) {
         console.error(err)

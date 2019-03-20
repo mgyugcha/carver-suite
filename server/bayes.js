@@ -85,22 +85,22 @@ const inferencia = arbol.createInferenceEngine(network)
 const queryOptions = arbol.createQueryOptions()
 const queryOutput = arbol.createQueryOutput()
 
-//inferencia.evidence.setState(cMediano)// envio del parametro para generar la inferencia
+// inferencia.evidence.setState(cMediano)// envio del parametro para generar la inferencia
 const queryA = new servidorbayes.Table(a)// consulta sobre que tabla se va a realizar la inferencia
 inferencia.queryDistributions.pushDistribution(queryA)// realiza la inferencia a la tabla
 inferencia.query(queryOptions, queryOutput)
-//console.log('{' + queryA.get([aForemost]) + ',' + queryA.get([aScalpel]) + '}.')//  resultados estadisticos de la inferencia
-function inferir (inf){
-    inferencia.evidence.setState(inf)
-    inferencia.queryDistributions.pushDistribution(queryA)
-    inferencia.query(queryOptions, queryOutput)
-    var valor1 = queryA.get([aForemost])
-    var valor2 = queryA.get([aScalpel])
-    return{
+// console.log('{' + queryA.get([aForemost]) + ',' + queryA.get([aScalpel]) + '}.')//  resultados estadisticos de la inferencia
+function inferir (inf) {
+  inferencia.evidence.setState(inf)
+  inferencia.queryDistributions.pushDistribution(queryA)
+  inferencia.query(queryOptions, queryOutput)
+  const valor1 = queryA.get([aForemost])
+  const valor2 = queryA.get([aScalpel])
+  return {
     valor1: valor1,
     valor2: valor2
-    }
+  }
 }
-var result = inferir(cObjcontun)
-console.log(result.valor1*100)
-console.log(result.valor2*100)
+const result = inferir(cObjcontun)
+console.log(result.valor1 * 100)
+console.log(result.valor2 * 100)
