@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3 class="title">Clasificar archivos</h3>
     <p class="content">
       El clasificador de archivos identidificará cuales son los
       archivos válidos.
@@ -164,6 +165,12 @@ export default {
   },
   methods: {
     async submit () {
+      if (!this.dirinput || !this.diroutput) {
+        return this.$toast.open({
+          type: 'is-warning',
+          message: 'Seleccione la carpeta de entrada y salida',
+        })
+      }
       try {
         this.$snackbar.open('Se está clasificando los archivos en segundo plano')
         this.percent = 0

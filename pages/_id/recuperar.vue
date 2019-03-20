@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h3 class="title">Recuperar archivos</h3>
     <form @submit.prevent="submit">
       <div class="columns">
         <div class="column">
@@ -47,7 +48,7 @@
             <b-field class="file is-fullwidth">
               <b-upload v-model="diroutput" webkitdirectory>
                 <a class="button">
-                  <b-icon icon="folder-upload" />
+                  <b-icon icon="upload" />
                   <span>Seleccionar</span>
                 </a>
               </b-upload>

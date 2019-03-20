@@ -2,6 +2,7 @@
 **  Nuxt
 */
 const http = require('http')
+const commandExists = require('command-exists').sync
 const express = require('express')
 const bodyParser = require('body-parser')
 const { Nuxt, Builder } = require('nuxt')
@@ -36,9 +37,34 @@ appServer.listen(4333, () => {
 */
 let win = null // Current window
 const electron = require('electron')
+const { dialog } = require('electron')
 const path = require('path')
 const app = electron.app
 const newWin = () => {
+  let dependencias = ''
+  if (!commandExists('scalpel') || !commandExists('foremost')) {
+    dependencias += `* Son necesarios los carvers scalpel y foremost\n`
+  }
+  if (!commandExists('ffmpeg')) {
+    dependencias += `* Es necesario ffmpeg para clasificar audio y video\n`
+  }
+  if (!commandExists('unoconv')) {
+    dependencias += `* Es necesario unoconv para clasificar los archivos de Office\n`
+  }
+  if (!commandExists('identify')) {
+    dependencias += `* Es necesario imagemagick para clasificar imágenes\n`
+  }
+  if (dependencias !== '') {
+    dependencias = 'Instale todas las dependencias para poder correr la aplicación:\n\n' + dependencias
+    dialog.showMessageBox({
+      type: 'error',
+      buttons: ['Entiendo'],
+      detail: dependencias,
+      message: 'Problemas con las dependencias',
+    })
+    console.error(dependencias)
+    process.exit(1)
+  }
   win = new electron.BrowserWindow({
     icon: path.join(__dirname, 'static/icon.png')
   })
