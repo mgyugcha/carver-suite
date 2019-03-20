@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h3 class="title">Recuperar archivos</h3>
+    <h3 class="title">
+      Recuperar archivos
+    </h3>
     <form @submit.prevent="submit">
       <div class="columns">
         <div class="column">

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <h3 class="title">Clasificar archivos</h3>
+    <h3 class="title">
+      Clasificar archivos
+    </h3>
     <p class="content">
       El clasificador de archivos identidificará cuales son los
       archivos válidos.
