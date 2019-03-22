@@ -122,7 +122,7 @@
         v-if="running"
         class="button is-danger"
         type="button"
-        @click="remove"
+        @click="remove(true)"
       >
         Cancelar recuperación de datos
       </button>
@@ -209,6 +209,7 @@ export default {
           await this.$store.dispatch('project/load', this.id)
           clearInterval(this.interval)
           if (!this.runningHasProblems) {
+            alert('Se recuperó los archivos correctamente. Procediendo a clasificar.')
             this.$router.push(`/${this.id}/clasificar`)
           }
         }
@@ -216,7 +217,8 @@ export default {
         await this.remove()
       }
     },
-    async remove () {
+    async remove (prevent = false) {
+      if (prevent && !confirm('¿Cancelar recuperación de datos?')) return
       try {
         await this.$axios.$delete(`/api/projects/${this.id}/recover`)
         this.$snackbar.open('Se canceló la recuperación de datos')
@@ -236,7 +238,7 @@ export default {
 .terminal {
   background: black;
   color: white;
-  border-radius: 6px;
+  border-radius: 4px;
   width: 100%;
   overflow: auto;
 }

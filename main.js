@@ -28,8 +28,8 @@ console.log(`Nuxt working on ${_NUXT_URL_}`)
 const appServer = express()
 appServer.use(bodyParser.json())
 appServer.use('/api', routes)
-appServer.listen(4333, () => {
-  console.log('api corriendo')
+appServer.listen(config.port, () => {
+  console.log('api corriendo por el puerto', config.port)
 })
 
 /*

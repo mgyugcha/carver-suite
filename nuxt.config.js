@@ -1,3 +1,6 @@
+const getPortSync = require('get-port-sync')
+const port = getPortSync()
+
 module.exports = {
   mode: 'spa',
   head: { title: 'carvers-suite' }, // Headers of the page
@@ -18,6 +21,7 @@ module.exports = {
     }
   },
   dev: process.env.NODE_ENV === 'DEV',
+  port,
   css: [
     '@/assets/css/global.css'
   ],
@@ -46,10 +50,6 @@ module.exports = {
   ],
   axios: { proxy: true },
   proxy: {
-    '/api/': 'http://localhost:4333',
-    // '/api/': {
-    //   target: `http://localhost:4333`,
-    //   pathRewrite: { '^/api/': '' }
-    // },
+    '/api/': `http://localhost:${port}`,
   },
 }

@@ -9,10 +9,12 @@ const express = require('express')
 const router = express.Router()
 const drivelist = require('drivelist')
 const sqlite3 = require('sqlite3').verbose()
-const db = new sqlite3.Database(__dirname + '/carvers-suite.db')
 const commandExists = require('command-exists')
 const fs = require('fs')
-
+const { app } = require('electron')
+const dbPath = process.env.NODE_ENV === 'DEV'
+  ? ':memory:' : path.resolve(app.getPath('userData'), 'database.db')
+const db = new sqlite3.Database(dbPath)
 const templatedir = path.resolve(__dirname, 'informe-plantilla.docx')
 const sqldatabase = fs.readFileSync(__dirname + '/database.sql', 'utf-8')
 db.run(sqldatabase)
@@ -103,11 +105,12 @@ router.route('/projects/:id/recover')
     db.run(sql, [req.body.carver, req.body.outputdir, id], error => {
       if (error) return next(error)
       let args
-      if (req.body.drive === 'scalpel') {
+      if (req.body.carver === 'scalpel') {
         args = [req.body.drive, '-o', req.body.outputdir]
       } else {
         args = ['-t', 'all', '-i', req.body.drive, '-o', req.body.outputdir]
       }
+      let output = ''
       const child = spawn(req.body.carver, args)
 
       child.on('close', code => {
@@ -115,13 +118,15 @@ router.route('/projects/:id/recover')
       })
 
       child.stdout.on('data', data => {
-        const result = data.toString()
-        db.run('UPDATE recover SET stdout=? WHERE id=?', [result, id])
+        output += data.toString()
+        output = output.replace(/(.*)\r/gm, '')
+        db.run('UPDATE recover SET stdout=? WHERE id=?', [output, id])
       })
 
       child.stderr.on('data', data => {
-        const result = data.toString()
-        db.run('UPDATE recover SET stdout=? WHERE id=?', [result, id])
+        output += data.toString()
+        output = output.replace(/(.*)\r/gm, '')
+        db.run('UPDATE recover SET stdout=? WHERE id=?', [output, id])
       })
 
       db.run('UPDATE recover SET pid=? WHERE id=?', [child.pid, id])

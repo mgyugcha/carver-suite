@@ -3,12 +3,21 @@
   "version": "1.0.0",
   "description": "Nuxt + Electron",
   "author": "Michael Yugcha <mgyugcha@gmail.com>",
+  "homepage": "https://gitlab.com/mgyugcha/carvers-suite",
   "private": true,
   "main": "main.js",
   "build": {
     "appId": "me.mgyugcha.carvers-suite",
     "directories": {
       "buildResources": "static"
+    },
+    "linux": {
+      "category": "Utility",
+      "synopsis": "Suite de carvers de recuperación de datos",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
     }
   },
   "scripts": {
@@ -28,6 +37,7 @@
     "express": "^4.16.4",
     "ffmpeg": "0.0.4",
     "file-type": "^10.8.0",
+    "get-port-sync": "^1.0.0",
     "imagemagick": "^0.1.3",
     "jszip": "^2.6.1",
     "moment": "^2.24.0",
