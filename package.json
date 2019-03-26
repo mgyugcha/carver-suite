@@ -15,8 +15,20 @@
       "category": "Utility",
       "synopsis": "Suite de carvers de recuperación de datos",
       "target": [
-        "AppImage",
-        "deb"
+        {
+          "target": "AppImage",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "deb",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
       ]
     }
   },
