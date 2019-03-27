@@ -46,10 +46,15 @@ const newWin = () => {
     dependencias += `* Son necesarios los carvers scalpel y foremost\n`
   }
   if (!commandExists('ffmpeg')) {
-    dependencias += `* Es necesario ffmpeg para clasificar audio y video\n`
+    dependencias += `\
+* Es necesario ffmpeg para clasificar audio y video. Puede utilizar \
+ 'apt install ffmpeg'\n`
   }
   if (!commandExists('unoconv')) {
-    dependencias += `* Es necesario unoconv para clasificar los archivos de Office\n`
+    dependencias += `\
+* Es necesario unoconv para clasificar los archivos de Office. Puede \
+ utilizar 'apt install unoconv'. También es recomendable que tenga \
+ instalado libreoffice.\n`
   }
   if (!commandExists('identify')) {
     dependencias += `* Es necesario imagemagick para clasificar imágenes\n`

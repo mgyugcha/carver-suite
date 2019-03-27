@@ -35,6 +35,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=DEV electron .",
     "build": "nuxt build && electron-builder",
+    "rebuild": "electron-rebuild -w sqlite3 -p",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
@@ -65,9 +66,10 @@
     "@nuxtjs/eslint-config": "0.0.1",
     "babel-eslint": "^10.0.1",
     "cross-env": "^5.1.4",
-    "electron": "2.0.0-beta.7",
+    "electron": "4.1.1",
     "electron-builder": "^20.8.1",
     "electron-devtools-installer": "^2.2.3",
+    "electron-rebuild": "^1.8.4",
     "eslint": "^5.15.1",
     "eslint-config-standard": "^12.0.0",
     "eslint-friendly-formatter": "^4.0.1",
