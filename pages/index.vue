@@ -35,15 +35,28 @@
             </b-field>
           </div>
         </div>
-        <b-table :data="data">
+        <b-table
+          :data="data"
+          paginated
+          per-page="20"
+        >
           <template slot-scope="props">
-            <b-table-column field="id" label="ID">
+            <b-table-column
+              field="id"
+              label="ID"
+              width="150"
+            >
               {{ props.row.id }}
             </b-table-column>
             <b-table-column field="titulo" label="Título">
               {{ props.row.titulo }}
             </b-table-column>
-            <b-table-column centered field="options" label="Opciones">
+            <b-table-column
+              centered
+              field="options"
+              label="Opciones"
+              width="1"
+            >
               <div class="buttons has-addons is-centered">
                 <nuxt-link
                   :to="`/${props.row.id}`"
