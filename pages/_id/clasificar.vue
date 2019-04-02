@@ -51,7 +51,7 @@
             >
               <a class="button">
                 <b-icon icon="upload" />
-                <span>Seleccione la carpeta de entrada</span>
+                <span>Seleccione la carpeta de salida</span>
               </a>
             </b-upload>
             <span v-if="diroutput" class="file-name">
