@@ -3,6 +3,15 @@
     <h3 class="title">
       Recuperar archivos
     </h3>
+    <div class="content">
+      Seleccione el carver que desea utilizar, el dispositivo de
+      almacenamiento y la carpeta de salida.  Una vez presione el
+      botón de <b>Recuperar datos</b> se generará un <b>pid</b> que es
+      un identificador del proceso. Al terminar se muestra
+      el <b>estado</b> de finalización, si es <b>0</b> entonces
+      finalizó correctamente, si es diferente de <b>0</b> quiere decir
+      que ocurrió algún problema.
+    </div>
     <form @submit.prevent="submit">
       <div class="columns">
         <div class="column">
@@ -238,7 +247,7 @@ export default {
 .terminal {
   background: black;
   color: white;
-  border-radius: 4px;
+  border-radius: 6px;
   width: 100%;
   overflow: auto;
 }

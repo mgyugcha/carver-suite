@@ -6,6 +6,9 @@
           <h3 class="title">
             {{ $store.state.project.data.titulo }}
           </h3>
+          <p class="subtitle">
+            Carvers Suite
+          </p>
         </div>
       </div>
     </section>

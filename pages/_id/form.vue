@@ -3,6 +3,12 @@
     <h3 class="title">
       Formulario
     </h3>
+    <div class="content">
+      Contestar el siguiente formulario le ayudará a identificar cuál
+      es el <b>carver</b> que puede recuperar la mayor cantidad de
+      datos de acuerdo al tipo de daño del dispositivo de
+      almacenamiento.
+    </div>
     <div class="columns is-multiline">
       <div class="column is-12">
         <div class="field">

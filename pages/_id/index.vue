@@ -3,6 +3,12 @@
     <h3 class="title">
       Informe de estado de dispositivo
     </h3>
+    <div class="content">
+      Ingrese el título del proyecto, los datos de ingreso y cuando el
+      proceso de clasificación de datos haya terminado puede llenar
+      los datos de entrega. Esta información servirá para generar
+      un <b>informe</b> al final del proceso.
+    </div>
     <div class="columns">
       <div class="column">
         <b-field label="Título del proyecto">

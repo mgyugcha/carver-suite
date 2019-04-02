@@ -4,12 +4,17 @@
       Clasificar archivos
     </h3>
     <p class="content">
-      El clasificador de archivos identidificará cuales son los
-      archivos válidos.
+      El clasificador de archivos analiza un directorio y clasifica
+      los archivos dentro en válidos (<b>positivos</b>) e inválidos
+      (<b>falsos-positivos</b>). Los archivos que no pueden ser
+      clasificados se conservarán en la carpeta de entrada.
     </p>
     <form @submit.prevent="submit">
       <div class="columns">
-        <div class="column">
+        <div
+          v-if="!inputFolder"
+          class="column"
+        >
           <label class="label">Seleccionar carpeta de entrada</label>
           <b-field class="file is-fullwidth">
             <b-upload
@@ -24,6 +29,17 @@
             <span v-if="dirinput" class="file-name">
               {{ dirinput.name }}
             </span>
+          </b-field>
+        </div>
+        <div
+          v-else
+          class="column"
+        >
+          <b-field label="Carpeta de entrada">
+            <b-input
+              :value="inputFolder"
+              disabled
+            />
           </b-field>
         </div>
         <div class="column">
@@ -127,9 +143,13 @@ export default {
     statistics: undefined,
   }),
   computed: {
+    inputFolder () {
+      return this.$store.state.project.data.outputFolderRecover
+    },
     body () {
       return {
-        inputdir: this.dirinput ? this.dirinput.path : undefined,
+        inputdir: this.inputFolder || this.dirinput
+          ? this.dirinput.path : undefined,
         outputdir: this.diroutput ? this.diroutput.path : undefined,
       }
     },
