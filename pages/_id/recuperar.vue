@@ -73,7 +73,7 @@
       <div class="buttons">
         <nuxt-link
           v-if="!runningHasProblems"
-          :to="`/project/${id}/sorter`"
+          :to="`/${id}/clasificar`"
           class="button"
         >
           Clasificar archivos
@@ -201,7 +201,8 @@ export default {
         await this.$store.dispatch('project/load', this.id)
         this.message = ''
         this.running = true
-        this.interval = setInterval(this.checkProgress, 1000)
+        await this.checkProgress()
+        this.interval = setInterval(this.checkProgress, 6000)
       } catch (err) {
         this.$toast.open({ message: err.message, type: 'is-danger' })
         console.error(err)
