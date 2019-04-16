@@ -148,8 +148,8 @@ export default {
     },
     body () {
       return {
-        inputdir: this.inputFolder || this.dirinput
-          ? this.dirinput.path : undefined,
+        inputdir: this.inputFolder || (this.dirinput
+          ? this.dirinput.path : undefined),
         outputdir: this.diroutput ? this.diroutput.path : undefined,
       }
     },
@@ -187,7 +187,7 @@ export default {
   },
   methods: {
     async submit () {
-      if (!this.dirinput || !this.diroutput) {
+      if (!this.body.inputdir || !this.body.outputdir) {
         return this.$toast.open({
           type: 'is-warning',
           message: 'Seleccione la carpeta de entrada y salida',

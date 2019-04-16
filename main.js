@@ -71,7 +71,7 @@ const newWin = () => {
     process.exit(1)
   }
   win = new electron.BrowserWindow({
-    icon: path.join(__dirname, 'static/icon.png')
+    icon: path.join(__dirname, '/static/icons/png/64x64.png')
   })
   win.maximize()
   win.on('closed', () => win = null)

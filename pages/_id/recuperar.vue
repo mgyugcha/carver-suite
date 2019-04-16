@@ -251,5 +251,6 @@ export default {
   border-radius: 6px;
   width: 100%;
   overflow: auto;
+  word-wrap: break-word;
 }
 </style>
