@@ -89,7 +89,7 @@
       <h3 class="title is-4">
         Resultado
       </h3>
-      <b-field>
+      <b-field class="is-pulled-left">
         <div
           v-if="$store.state.project.pid !== null"
           class="control"
@@ -119,7 +119,16 @@
           </b-taglist>
         </div>
       </b-field>
-      <pre class="terminal">{{ message }}</pre>
+      <div class="buttons is-right">
+        <b-button
+          class="is-pulled-right"
+          type="is-text"
+          @click="showOutput = !showOutput"
+        >
+          {{ showOutput ? 'Ocultar' : 'Mostrar' }} output
+        </b-button>
+      </div>
+      <pre v-if="showOutput" class="terminal">{{ message }}</pre>
     </div>
   </div>
 </template>
@@ -148,6 +157,7 @@ export default {
       outputdir: '',
     },
     running: false,
+    showOutput: true,
     message: '',
   }),
   computed: {
@@ -180,7 +190,7 @@ export default {
     // default data
     const project = this.$store.state.project
     this.message = project.stdout || ''
-    this.data.carver = project.carver
+    this.data.carver = project.carver || this.data.carver
     this.data.outputdir = project.outputFolderRecover
   },
   methods: {
@@ -216,6 +226,7 @@ export default {
   font: 14px monospace;
   color: white;
   overflow: auto;
+  width: 100%;
   word-break: break-all;
   white-space: pre-wrap;
   margin-bottom: 20px;
