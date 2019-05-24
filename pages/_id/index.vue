@@ -146,8 +146,8 @@ export default {
   }),
   async created () {
     try {
-      await this.$store.dispatch('project/load', this.$route.params.id)
-      const tmp = JSON.parse(JSON.stringify(this.$store.state.project.data))
+      await this.$store.dispatch('load', this.$route.params.id)
+      const tmp = JSON.parse(JSON.stringify(this.$store.state.project))
       if (tmp.fechaDeIngreso) tmp.fechaDeIngreso = new Date(tmp.fechaDeIngreso)
       if (tmp.horaDeIngreso) tmp.horaDeIngreso = new Date(tmp.horaDeIngreso)
       if (tmp.fechaDeEntrega) tmp.fechaDeEntrega = new Date(tmp.fechaDeEntrega)
@@ -160,11 +160,11 @@ export default {
   methods: {
     async onSubmit () {
       try {
-        await this.$store.dispatch('project/update', {
+        await this.$store.dispatch('update', {
           id: this.$route.params.id, data: this.data
         })
-        this.$snackbar.open('Se guardó correctamente')
-        await this.$store.dispatch('project/load', this.$route.params.id)
+        this.$toast.open('Se guardó correctamente')
+        await this.$store.dispatch('refresh')
       } catch (err) {
         this.$toast.open({ message: err.message, type: 'is-danger' })
       }

@@ -1,14 +1,21 @@
 const { app: appe, BrowserWindow } = require('electron')
-const express = require('express')
+
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
 const bodyParser = require('body-parser')
 const config = require('../nuxt.config.js')
 const routes = require('./routes')
+const http = require('http').Server(app)
+const io = require('socket.io')(http)
 
-const app = express()
 // Import and Set Nuxt.js options
 config.dev = !(process.env.NODE_ENV === 'production')
+
+io.on('connection', function (socket){
+  socket.on('chat', function(msg){
+    console.log('message: ' + msg)
+  })
+})
 
 async function start () {
   // Init Nuxt.js
@@ -31,7 +38,7 @@ async function start () {
   app.use(nuxt.render)
 
   // Listen the server
-  app.listen(port, host)
+  http.listen(port, host)
   consola.ready({
     message: `Server listening on http://${host}:${port}`,
     badge: true

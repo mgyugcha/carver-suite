@@ -56,17 +56,7 @@
         </div>
         <div class="column">
           <b-field label="Carpeta de salida">
-            <b-field class="file is-fullwidth">
-              <b-upload v-model="diroutput" webkitdirectory>
-                <a class="button">
-                  <b-icon icon="upload" />
-                  <span>Seleccionar</span>
-                </a>
-              </b-upload>
-              <span v-if="diroutput" class="file-name">
-                {{ diroutput.name }}
-              </span>
-            </b-field>
+            <folder-input v-model="data.outputdir" />
           </b-field>
         </div>
       </div>
@@ -84,6 +74,14 @@
         >
           Recuperar datos
         </button>
+        <button
+          v-if="running"
+          class="button is-danger"
+          type="button"
+          @click="remove(true)"
+        >
+          Cancelar recuperación de datos
+        </button>
       </div>
     </form>
     <br>
@@ -91,19 +89,22 @@
       <h3 class="title is-4">
         Resultado
       </h3>
-      <b-field grouped group-multiline>
-        <div class="control">
+      <b-field>
+        <div
+          v-if="$store.state.project.pid !== null"
+          class="control"
+        >
           <b-taglist attached>
             <b-tag type="is-dark">
               pid
             </b-tag>
             <b-tag>
-              {{ $store.state.project.data.pid }}
+              {{ $store.state.project.pid }}
             </b-tag>
           </b-taglist>
         </div>
         <div
-          v-if="$store.state.project.data.code !== null"
+          v-if="$store.state.project.code !== null"
           class="control"
         >
           <b-taglist attached>
@@ -113,33 +114,19 @@
             <b-tag
               :type="runningHasProblems ? 'is-danger' : 'is-success'"
             >
-              {{ $store.state.project.data.code }}
+              {{ $store.state.project.code }}
             </b-tag>
           </b-taglist>
         </div>
       </b-field>
-      <br>
-      <b-notification
-        v-if="$store.state.project.data.code !== null && runningHasProblems"
-        type="is-danger"
-      >
-        Ocurrieron problemas al correr el carver, por favor verifique
-        la consola para identificar los errores.
-      </b-notification>
-      <pre class="box terminal">{{ message }}</pre>
-      <button
-        v-if="running"
-        class="button is-danger"
-        type="button"
-        @click="remove(true)"
-      >
-        Cancelar recuperación de datos
-      </button>
+      <pre class="terminal">{{ message }}</pre>
     </div>
   </div>
 </template>
 
 <script>
+import socket from '@/plugins/socket.io.js'
+
 export default {
   async beforeRouteLeave (to, from, next) {
     if (this.running === true) {
@@ -157,10 +144,10 @@ export default {
       carvers: [],
       drives: [],
     },
-    diroutput: undefined,
-    data: { },
-    running: undefined,
-    interval: undefined,
+    data: {
+      outputdir: '',
+    },
+    running: false,
     message: '',
   }),
   computed: {
@@ -171,70 +158,49 @@ export default {
       return this.options.drives.filter(x => !x.isSystem)
     },
     runningHasProblems () {
-      return this.$store.state.project.data.code !== '0'
+      return this.$store.state.project.code !== '0'
     }
   },
   async created () {
+    socket.on('output', msg => {
+      this.message = msg
+    }).on('end', async () => {
+      this.running = false
+      await this.$store.dispatch('refresh')
+      if (!this.runningHasProblems) {
+        alert('Se recuperó los archivos correctamente. Procediendo a clasificar.')
+        this.$router.push(`/${this.id}/clasificar`)
+      }
+    })
     this.options.drives = await this.$axios.$get('/api/get-drives')
     this.data.drive = this.drives[0] ? this.drives[0].device : ''
     this.options.carvers = await this.$axios.$get('/api/get-carvers')
     this.data.carver = this.options.carvers[0]
-    await this.$store.dispatch('project/load', this.id)
+    await this.$store.dispatch('load', this.id)
     // default data
-    const project = this.$store.state.project.data
+    const project = this.$store.state.project
     this.message = project.stdout || ''
-    this.data.carver = project.carver || this.data.carver
-    this.data.outputdir = project.outputdir || this.data.outputdir
+    this.data.carver = project.carver
+    this.data.outputdir = project.outputFolderRecover
   },
   methods: {
     async submit () {
-      if (!this.diroutput) {
-        return this.$toast.open({
-          message: 'Ingrese una carpeta de salida',
-          type: 'is-warning'
-        })
-      }
       try {
-        this.data.outputdir = this.diroutput.path
-        await this.$axios.$post(`/api/projects/${this.id}/recover`, this.data)
-        this.$snackbar.open('Se está corriendo el carver en segundo plano')
-        await this.$store.dispatch('project/load', this.id)
-        this.message = ''
         this.running = true
-        await this.checkProgress()
-        this.interval = setInterval(this.checkProgress, 6000)
+        await this.$axios.$post(`/api/projects/${this.id}/recover`, this.data)
+        await this.$store.dispatch('refresh')
       } catch (err) {
         this.$toast.open({ message: err.message, type: 'is-danger' })
         console.error(err)
-      }
-    },
-    async checkProgress () {
-      try {
-        const data = await this.$axios.$get(`/api/projects/${this.id}/recover`, {
-          progress: false
-        })
-        this.message = data.stdout
-        if (data.code !== null) {
-          this.running = false
-          await this.$store.dispatch('project/load', this.id)
-          clearInterval(this.interval)
-          if (!this.runningHasProblems) {
-            alert('Se recuperó los archivos correctamente. Procediendo a clasificar.')
-            this.$router.push(`/${this.id}/clasificar`)
-          }
-        }
-      } catch (err) {
-        await this.remove()
       }
     },
     async remove (prevent = false) {
       if (prevent && !confirm('¿Cancelar recuperación de datos?')) return
       try {
         await this.$axios.$delete(`/api/projects/${this.id}/recover`)
-        this.$snackbar.open('Se canceló la recuperación de datos')
+        this.$toast.open('Se canceló la recuperación de datos')
         this.running = false
-        clearInterval(this.interval)
-        await this.$store.dispatch('project/load', this.id)
+        await this.$store.dispatch('refresh')
       } catch (err) {
         console.error(err)
         this.$toast.open({ message: err.message, type: 'is-danger' })
@@ -244,13 +210,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .terminal {
-  background: black;
+  background: #000;
+  font: 14px monospace;
   color: white;
-  border-radius: 6px;
-  width: 100%;
   overflow: auto;
-  word-wrap: break-word;
+  word-break: break-all;
+  white-space: pre-wrap;
+  margin-bottom: 20px;
+  word-spacing: 0px;
 }
 </style>

@@ -25,6 +25,10 @@ module.exports = {
   css: [
     '@/assets/css/global.css'
   ],
+  plugins: [
+    '~/plugins/socket.io.js',
+    '~/plugins/app.js',
+  ],
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',

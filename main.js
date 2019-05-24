@@ -3,7 +3,7 @@
 */
 const http = require('http')
 const commandExists = require('command-exists').sync
-const express = require('express')
+const appServer = require('express')()
 const bodyParser = require('body-parser')
 const { Nuxt, Builder } = require('nuxt')
 const routes = require('./server/routes.js')
@@ -13,6 +13,9 @@ config.rootDir = __dirname // for electron-builder
 const nuxt = new Nuxt(config)
 const builder = new Builder(nuxt)
 const server = http.createServer(nuxt.render)
+// const http = require('http').Server(app)
+const io = require('socket.io')(server)
+
 // Build only in dev mode
 if (config.dev) {
   builder.build().catch(err => {
@@ -25,9 +28,8 @@ server.listen()
 const _NUXT_URL_ = `http://localhost:${server.address().port}`
 console.log(`Nuxt working on ${_NUXT_URL_}`)
 
-const appServer = express()
 appServer.use(bodyParser.json())
-appServer.use('/api', routes)
+appServer.use('/api', routes(io))
 appServer.listen(config.port, () => {
   console.log('api corriendo por el puerto', config.port)
 })
@@ -61,14 +63,14 @@ const newWin = () => {
   }
   if (dependencias !== '') {
     dependencias = 'Instale todas las dependencias para poder correr la aplicación:\n\n' + dependencias
-    dialog.showMessageBox({
-      type: 'error',
-      buttons: ['Entiendo'],
-      detail: dependencias,
-      message: 'Problemas con las dependencias',
-    })
+    // dialog.showMessageBox({
+    //   type: 'error',
+    //   buttons: ['Entiendo'],
+    //   detail: dependencias,
+    //   message: 'Problemas con las dependencias',
+    // })
     console.error(dependencias)
-    process.exit(1)
+    // process.exit(1)
   }
   win = new electron.BrowserWindow({
     icon: path.join(__dirname, '/static/icons/png/64x64.png')

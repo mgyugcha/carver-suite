@@ -1,16 +1,19 @@
 const rest = '/api/projects'
 
 export const state = () => ({
-  data: {}
+  project: {}
 })
 
 export const mutations = {
-  setProject (state, data) {
-    state.data = data
+  setProject (state, project) {
+    state.project = project
   }
 }
 
 export const actions = {
+  refresh ({ state, dispatch }) {
+    return dispatch('load', state.project.id)
+  },
   async load ({ commit }, id) {
     const project = await this.$axios.$get(`${rest}/${id}`)
     commit('setProject', project)

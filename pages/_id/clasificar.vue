@@ -144,7 +144,7 @@ export default {
   }),
   computed: {
     inputFolder () {
-      return this.$store.state.project.data.outputFolderRecover
+      return this.$store.state.project.outputFolderRecover
     },
     body () {
       return {
@@ -179,9 +179,9 @@ export default {
     },
   },
   async created () {
-    await this.$store.dispatch('project/load', this.id)
+    await this.$store.dispatch('load', this.id)
     // default data
-    const project = this.$store.state.project.data
+    const project = this.$store.state.project
     this.statistics = JSON.parse(project.statistics) || undefined
     this.percent = project.percent || 0
   },
@@ -212,7 +212,7 @@ export default {
         if (data.percent === 1) {
           this.statistics = JSON.parse(data.statistics)
           this.running = false
-          await this.$store.dispatch('project/load', this.id)
+          await this.$store.dispatch('refresh')
           clearInterval(this.interval)
         }
       } catch (err) {
@@ -226,7 +226,7 @@ export default {
         await this.$axios.$delete(this.rest)
         this.$snackbar.open('Se canceló la clasificación de datos')
         clearInterval(this.interval)
-        await this.$store.dispatch('project/load', this.id)
+        await this.$store.dispatch('refresh')
       } catch (err) {
         console.error(err)
         this.$toast.open({ message: err.message, type: 'is-danger' })

@@ -4,7 +4,7 @@
       <div class="hero-body">
         <div class="container">
           <h3 class="title">
-            {{ $store.state.project.data.titulo }}
+            {{ $store.state.project.titulo }}
           </h3>
           <p class="subtitle">
             Carvers Suite
@@ -15,7 +15,7 @@
     <section class="section">
       <div class="container">
         <div class="columns">
-          <div class="column is-3">
+          <div class="column is-narrow">
             <aside class="menu">
               <p class="menu-label">
                 Navegación
@@ -75,7 +75,7 @@
 export default {
   async created () {
     try {
-      await this.$store.dispatch('project/load', this.$route.params.id)
+      await this.$store.dispatch('load', this.$route.params.id)
     } catch (err) {
       this.$router.push('/')
       this.$toast.open({ message: err.response.data, type: 'is-danger' })
