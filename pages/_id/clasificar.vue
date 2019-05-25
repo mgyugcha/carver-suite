@@ -2,13 +2,68 @@
   <div>
     <h3 class="title">
       Clasificar archivos
+      <b-button
+        title="Mostrar ayuda"
+        type="is-text"
+        icon-right="help-circle"
+        @click="showHelp = !showHelp"
+      />
     </h3>
-    <p class="content">
-      El clasificador de archivos analiza un directorio y clasifica
-      los archivos dentro en válidos (<b>positivos</b>) e inválidos
-      (<b>falsos-positivos</b>). Los archivos que no pueden ser
-      clasificados se conservarán en la carpeta de entrada.
-    </p>
+    <b-modal :active.sync="showHelp" scroll="keep">
+      <div class="box content">
+        <h2>Clasificar archivos</h2>
+        <p class="has-text-justified">
+          Como resultado del paso anterior se puede obtener una gran
+          cantidad de archivos, muchos de estos archivos válidos,
+          muchos otros corruptos y otros simplemente archivos
+          basura. El clasificador de archivos analiza un directorio y
+          los ordena por:
+        </p>
+
+        <div class="columns">
+          <div class="column">
+            <p class="has-text-centered">
+              <b-icon
+                size="is-medium"
+                type="is-success"
+                icon="file-check"
+              />
+              <br>
+              <b>Positivos</b>
+              <br><br>
+              Archivos recuperados correctamente
+            </p>
+          </div>
+          <div class="column">
+            <p class="has-text-centered">
+              <b-icon
+                size="is-medium"
+                type="is-danger"
+                icon="file-question"
+              />
+              <br>
+              <b>Falsos positivos</b>
+              <br><br>
+              Archivos que fueron recuperados, pero tienen fallas de
+              integridad
+            </p>
+          </div>
+          <div class="column">
+            <p class="has-text-centered">
+              <b-icon
+                size="is-medium"
+                icon="file-find"
+              />
+              <br>
+              <b>Sin clasificación</b>
+              <br><br>
+              Archivos que deben clasificarse manualmente por el
+              usuario.
+            </p>
+          </div>
+        </div>
+      </div>
+    </b-modal>
     <form @submit.prevent="submit">
       <div class="columns">
         <div class="column">
@@ -95,6 +150,7 @@ export default {
     GChart
   },
   data: () => ({
+    showHelp: false,
     data: {
       inputdir: '',
       outputdir: '',

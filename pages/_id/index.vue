@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="onSubmit">
     <h3 class="title">
-      Informe de estado de dispositivo
+      Información del proyecto
     </h3>
     <div class="content">
       Ingrese el título del proyecto, los datos de ingreso y cuando el

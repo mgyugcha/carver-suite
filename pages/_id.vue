@@ -27,7 +27,7 @@
                     active-class="is-active"
                     exact
                   >
-                    Inicio
+                    Proyecto
                   </nuxt-link>
                 </li>
                 <li>
