@@ -2,16 +2,94 @@
   <div>
     <h3 class="title">
       Recuperar archivos
+      <b-button
+        title="Mostrar ayuda"
+        type="is-text"
+        icon-right="help-circle"
+        @click="showHelp = !showHelp"
+      />
     </h3>
-    <div class="content">
-      Seleccione el carver que desea utilizar, el dispositivo de
-      almacenamiento y la carpeta de salida.  Una vez presione el
-      botón de <b>Recuperar datos</b> se generará un <b>pid</b> que es
-      un identificador del proceso. Al terminar se muestra
-      el <b>estado</b> de finalización, si es <b>0</b> entonces
-      finalizó correctamente, si es diferente de <b>0</b> quiere decir
-      que ocurrió algún problema.
-    </div>
+    <b-modal :active.sync="showHelp" scroll="keep">
+      <div class="box content">
+        <h2>Recuperar archivos</h2>
+        <p class="has-text-justified">
+          En esta vista se le ayudará con el proceso de recuperación
+          de la información. Para esto usted debe seleccionar el
+          carver que desea utilizar, el dispositivo de almacenamiento
+          y la carpeta de salida. Recuerde que si llena el formulario
+          con el estado de su dispositivo de almacenamiento, <b>Carver
+            Suite</b> le da una sugerencia del carver que debe utilizar
+          para una recuperación de datos mas eficiente. Cuando el
+          carver empiece a ejecutarse generará un PID y al finalizar
+          un estado de finalización.
+        </p>
+        <div class="columns">
+          <div class="column">
+            <h3>PID</h3>
+            <b-field grouped>
+              <div class="control">
+                <b-taglist attached>
+                  <b-tag type="is-dark">
+                    pid
+                  </b-tag>
+                  <b-tag>5658</b-tag>
+                </b-taglist>
+              </div>
+            </b-field>
+            <div class="has-text-justified">
+              Es el número identificador del proceso, sirve para
+              detener el proceso en caso de que el usuario así lo
+              requiera.
+            </div>
+          </div>
+          <div class="column">
+            <h3>Status final</h3>
+            <b-field grouped>
+              <div class="control">
+                <b-taglist attached>
+                  <b-tag type="is-dark">
+                    status final
+                  </b-tag>
+                  <b-tag type="is-success">
+                    0
+                  </b-tag>
+                </b-taglist>
+              </div>
+              <div class="control">
+                <b-taglist attached>
+                  <b-tag type="is-dark">
+                    status final
+                  </b-tag>
+                  <b-tag type="is-danger">
+                    255
+                  </b-tag>
+                </b-taglist>
+              </div>
+            </b-field>
+            <div class="has-text-justified">
+              Si el estado es <code>0</code> entonces finalizó
+              correctamente, caso contrario quiere decir que ocurrió
+              algún problema.
+            </div>
+          </div>
+        </div>
+        <h2>
+          Consideraciones
+        </h2>
+        <p class="has-text-justified">
+          Tanto Scalpel como Foremost generan <i>logs</i> que ayudan
+          al usuario a saber como está el proceso de recuperación de
+          la información. Sin embargo en algunas ocasiones
+          estos <i>logs</i> se tornan en caracteres extraños como se
+          muestra en la figura de abajo. Cuando esto sucede no quiere
+          decir que haya ocurrido un error en el proceso, usted puede
+          seguir esperando con tranquilidad que concluya.
+        </p>
+        <div class="has-text-centered">
+          <img src="/bad-logs.png">
+        </div>
+      </div>
+    </b-modal>
     <form @submit.prevent="submit">
       <div class="columns">
         <div class="column">
@@ -89,7 +167,7 @@
       <h3 class="title is-4">
         Resultado
       </h3>
-      <b-field class="is-pulled-left">
+      <b-field grouped class="is-pulled-left">
         <div
           v-if="$store.state.project.pid !== null"
           class="control"
@@ -148,7 +226,7 @@ export default {
     }
   },
   data: () => ({
-    isLoading: false,
+    showHelp: false,
     options: {
       carvers: [],
       drives: [],

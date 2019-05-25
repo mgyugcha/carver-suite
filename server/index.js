@@ -11,8 +11,8 @@ const io = require('socket.io')(http)
 // Import and Set Nuxt.js options
 config.dev = !(process.env.NODE_ENV === 'production')
 
-io.on('connection', function (socket){
-  socket.on('chat', function(msg){
+io.on('connection', function (socket) {
+  socket.on('chat', function (msg) {
     console.log('message: ' + msg)
   })
 })
