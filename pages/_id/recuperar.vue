@@ -225,6 +225,7 @@ export default {
       next()
     }
   },
+  transition: 'zoom',
   data: () => ({
     showHelp: false,
     options: {

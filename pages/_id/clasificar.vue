@@ -80,6 +80,7 @@ import { shell } from 'electron'
 import { GChart } from 'vue-google-charts'
 
 export default {
+  transition: 'zoom',
   async beforeRouteLeave (to, from, next) {
     if (this.running === true) {
       if (confirm('Hay un proceso en segundo plano. ¿Seguro que desea salir?')) {

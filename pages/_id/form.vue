@@ -199,6 +199,7 @@
 import * as bayes from '@/assets/bayes'
 
 export default {
+  transition: 'zoom',
   data: () => ({
     questions: {},
     hasCaida: false,

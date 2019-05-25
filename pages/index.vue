@@ -88,6 +88,7 @@
 <script>
 export default {
   name: 'HomePage',
+  transition: 'fade',
   data: () => ({
     data: [],
   }),

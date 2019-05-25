@@ -73,6 +73,7 @@
 
 <script>
 export default {
+  transition: 'fade',
   async created () {
     try {
       await this.$store.dispatch('load', this.$route.params.id)

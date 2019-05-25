@@ -141,6 +141,7 @@
 
 <script>
 export default {
+  transition: 'zoom',
   data: () => ({
     data: { },
   }),
