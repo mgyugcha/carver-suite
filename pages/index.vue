@@ -5,7 +5,7 @@
         <div class="container">
           <h1 class="title">
             <nuxt-link to="/">
-              Carvers Suite
+              Carver Suite
             </nuxt-link>
           </h1>
           <h2 class="subtitle">

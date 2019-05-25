@@ -11,53 +11,13 @@
     </p>
     <form @submit.prevent="submit">
       <div class="columns">
-        <div
-          v-if="!inputFolder"
-          class="column"
-        >
+        <div class="column">
           <label class="label">Seleccionar carpeta de entrada</label>
-          <b-field class="file is-fullwidth">
-            <b-upload
-              v-model="dirinput"
-              webkitdirectory
-            >
-              <a class="button">
-                <b-icon icon="upload" />
-                <span>Seleccione la carpeta de entrada</span>
-              </a>
-            </b-upload>
-            <span v-if="dirinput" class="file-name">
-              {{ dirinput.name }}
-            </span>
-          </b-field>
-        </div>
-        <div
-          v-else
-          class="column"
-        >
-          <b-field label="Carpeta de entrada">
-            <b-input
-              :value="inputFolder"
-              disabled
-            />
-          </b-field>
+          <folder-input v-model="data.inputdir" />
         </div>
         <div class="column">
           <label class="label">Seleccionar carpeta de salida</label>
-          <b-field class="file is-fullwidth">
-            <b-upload
-              v-model="diroutput"
-              webkitdirectory
-            >
-              <a class="button">
-                <b-icon icon="upload" />
-                <span>Seleccione la carpeta de salida</span>
-              </a>
-            </b-upload>
-            <span v-if="diroutput" class="file-name">
-              {{ diroutput.name }}
-            </span>
-          </b-field>
+          <folder-input v-model="data.outputdir" />
         </div>
       </div>
       <div
@@ -134,8 +94,10 @@ export default {
     GChart
   },
   data: () => ({
-    dirinput: undefined,
-    diroutput: undefined,
+    data: {
+      inputdir: '',
+      outputdir: '',
+    },
     running: false,
     runningInforme: false,
     interval: undefined,
@@ -143,16 +105,6 @@ export default {
     statistics: undefined,
   }),
   computed: {
-    inputFolder () {
-      return this.$store.state.project.outputFolderRecover
-    },
-    body () {
-      return {
-        inputdir: this.inputFolder || (this.dirinput
-          ? this.dirinput.path : undefined),
-        outputdir: this.diroutput ? this.diroutput.path : undefined,
-      }
-    },
     chartData () {
       const positivos = this.statistics ? this.statistics.good : 0
       const negativos = this.statistics ? this.statistics.bad : 0
@@ -183,18 +135,14 @@ export default {
     // default data
     const project = this.$store.state.project
     this.statistics = JSON.parse(project.statistics) || undefined
+    this.data.inputdir = this.$store.state.project.outputFolderRecover || ''
+    this.data.outputdir = this.$store.state.project.outputFolderSorter || ''
     this.percent = project.percent || 0
   },
   methods: {
     async submit () {
-      if (!this.body.inputdir || !this.body.outputdir) {
-        return this.$toast.open({
-          type: 'is-warning',
-          message: 'Seleccione la carpeta de entrada y salida',
-        })
-      }
       try {
-        this.$snackbar.open('Se está clasificando los archivos en segundo plano')
+        this.$toast.open('Se está clasificando los archivos en segundo plano')
         this.percent = 0
         this.statistics = undefined
         this.running = true
@@ -224,7 +172,7 @@ export default {
       try {
         this.running = false
         await this.$axios.$delete(this.rest)
-        this.$snackbar.open('Se canceló la clasificación de datos')
+        this.$toast.open('Se canceló la clasificación de datos')
         clearInterval(this.interval)
         await this.$store.dispatch('refresh')
       } catch (err) {
@@ -236,9 +184,9 @@ export default {
       try {
         this.runningInforme = true
         const informe =
-          await this.$axios.$post(`/api/projects/${this.id}/informe`, this.body)
+          await this.$axios.$post(`/api/projects/${this.id}/informe`, this.data)
         shell.openItem(informe)
-        this.$snackbar.open('El informe se generó correctamente')
+        this.$toast.open('El informe se generó correctamente')
       } catch (err) {
         console.error(err)
         this.$toast.open({ message: err.message, type: 'is-danger' })

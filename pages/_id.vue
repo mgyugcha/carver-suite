@@ -7,7 +7,7 @@
             {{ $store.state.project.titulo }}
           </h3>
           <p class="subtitle">
-            Carvers Suite
+            Carver Suite
           </p>
         </div>
       </div>

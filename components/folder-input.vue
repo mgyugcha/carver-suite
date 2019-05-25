@@ -1,15 +1,9 @@
 <template>
   <b-field>
-    <b-input
-      :value="value"
-      required
-      expanded
-      readonly
-      placeholder="Seleccione una carpeta"
-    />
     <p class="control">
       <b-upload
         v-model="file"
+        :required="!value"
         webkitdirectory
         @input="input"
       >
@@ -18,6 +12,13 @@
         </a>
       </b-upload>
     </p>
+    <b-input
+      :value="value"
+      required
+      expanded
+      readonly
+      placeholder="Seleccione una carpeta"
+    />
   </b-field>
 </template>
 
