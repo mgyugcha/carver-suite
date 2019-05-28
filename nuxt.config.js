@@ -4,7 +4,7 @@ console.log('el port aca', port)
 
 module.exports = {
   mode: 'spa',
-  head: { title: 'carvers-suite' }, // Headers of the page
+  head: { title: 'carver-suite' }, // Headers of the page
   loading: false, // Disable default loading bar
   build: {
     extend (config, { isDev, isClient }) {

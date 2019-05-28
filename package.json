@@ -1,13 +1,13 @@
 {
-  "name": "carvers-suite",
+  "name": "carver-suite",
   "version": "1.1.0",
   "description": "Suite de carvers de recuperación de información",
   "author": "Michael Yugcha <mgyugcha@gmail.com>",
-  "homepage": "https://gitlab.com/mgyugcha/carvers-suite",
+  "homepage": "https://gitlab.com/mgyugcha/carver-suite",
   "private": true,
   "main": "main.js",
   "build": {
-    "appId": "me.mgyugcha.carvers-suite",
+    "appId": "me.mgyugcha.carver-suite",
     "directories": {
       "buildResources": "static"
     },
@@ -25,7 +25,7 @@
       "icon": "icons/png/",
       "desktop": {
         "Name": "Carvers Suite",
-        "Icon": "carvers-suite",
+        "Icon": "carver-suite",
         "Comment": "Suite de carvers de recuperación de información",
         "Categories": "Utility"
       }

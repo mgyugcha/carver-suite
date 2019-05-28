@@ -1,4 +1,4 @@
-# carvers-suite
+# carver-suite
 
 > Nuxt + Electron
 

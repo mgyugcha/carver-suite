@@ -86,7 +86,7 @@
           seguir esperando con tranquilidad que concluya.
         </p>
         <div class="has-text-centered">
-          <img src="/bad-logs.png">
+          <img src="~/assets/bad-logs.png">
         </div>
       </div>
     </b-modal>
