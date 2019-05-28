@@ -63,14 +63,14 @@ const newWin = () => {
   }
   if (dependencias !== '') {
     dependencias = 'Instale todas las dependencias para poder correr la aplicación:\n\n' + dependencias
-    // dialog.showMessageBox({
-    //   type: 'error',
-    //   buttons: ['Entiendo'],
-    //   detail: dependencias,
-    //   message: 'Problemas con las dependencias',
-    // })
+    dialog.showMessageBox({
+      type: 'error',
+      buttons: ['Entiendo'],
+      detail: dependencias,
+      message: 'Problemas con las dependencias',
+    })
     console.error(dependencias)
-    // process.exit(1)
+    process.exit(1)
   }
   win = new electron.BrowserWindow({
     icon: path.join(__dirname, '/static/icons/png/64x64.png')

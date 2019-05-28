@@ -33,7 +33,9 @@
     "deb": {
       "depends": [
         "ffmpeg",
-        "unoconv"
+        "unoconv",
+        "foremost",
+        "scalpel"
       ]
     }
   },
