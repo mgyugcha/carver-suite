@@ -127,12 +127,29 @@
         </button>
       </div>
     </form>
+    <br>
+    <div v-if="running || message">
+      <h3 class="title is-4 is-pulled-left">
+        Clasificación
+      </h3>
+      <div class="buttons is-right">
+        <b-button
+          class="is-pulled-right"
+          type="is-text"
+          @click="showOutput = !showOutput"
+        >
+          {{ showOutput ? 'Ocultar' : 'Mostrar' }} output
+        </b-button>
+      </div>
+      <pre v-if="showOutput" class="terminal">{{ message }}</pre>
+    </div>
   </div>
 </template>
 
 <script>
 import { shell } from 'electron'
 import { GChart } from 'vue-google-charts'
+import socket from '@/plugins/socket.io.js'
 
 export default {
   transition: 'zoom',
@@ -151,13 +168,14 @@ export default {
   },
   data: () => ({
     showHelp: false,
+    showOutput: true,
+    message: '',
     data: {
       inputdir: '',
       outputdir: '',
     },
     running: false,
     runningInforme: false,
-    interval: undefined,
     percent: 0,
     statistics: undefined,
   }),
@@ -188,6 +206,18 @@ export default {
     },
   },
   async created () {
+    socket.on('output-percent', percent => {
+      this.percent = percent
+    }).on('output-file', file => {
+      this.message += file
+    }).on('end-sort', async () => {
+      this.running = false
+      await this.$store.dispatch('refresh')
+      await this.$store.dispatch('load', this.id)
+      const project = this.$store.state.project
+      this.statistics = JSON.parse(project.statistics)
+      this.percent = project.percent
+    })
     await this.$store.dispatch('load', this.id)
     // default data
     const project = this.$store.state.project
@@ -199,38 +229,22 @@ export default {
   methods: {
     async submit () {
       try {
+        this.running = true
         this.$toast.open('Se está clasificando los archivos en segundo plano')
+        await this.$axios.$post(this.rest, this.data)
         this.percent = 0
         this.statistics = undefined
-        this.running = true
-        await this.$axios.$post(this.rest, this.body)
-        this.interval = setInterval(this.checkPercent, 500)
       } catch (err) {
         this.$toast.open({ message: err.message, type: 'is-danger' })
         console.error(err)
       }
     },
-    async checkPercent () {
-      try {
-        const data = await this.$axios.$get(this.rest, { progress: false })
-        this.percent = data.percent
-        if (data.percent === 1) {
-          this.statistics = JSON.parse(data.statistics)
-          this.running = false
-          await this.$store.dispatch('refresh')
-          clearInterval(this.interval)
-        }
-      } catch (err) {
-        await this.remove()
-      }
-    },
     async remove () {
       if (!confirm('¿Cancelar clasificación de archivos?')) return
       try {
-        this.running = false
         await this.$axios.$delete(this.rest)
         this.$toast.open('Se canceló la clasificación de datos')
-        clearInterval(this.interval)
+        this.running = false
         await this.$store.dispatch('refresh')
       } catch (err) {
         console.error(err)

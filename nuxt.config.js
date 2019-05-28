@@ -1,5 +1,6 @@
 const getPortSync = require('get-port-sync')
 const port = getPortSync()
+console.log('el port aca', port)
 
 module.exports = {
   mode: 'spa',

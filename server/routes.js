@@ -184,12 +184,13 @@ WHERE id=?`
       emitter.on('chunck', percent => {
         db.run('UPDATE recover SET percent=? WHERE id=?', [percent, id])
       })
-      globalpromise = sorter({ emitter, inputdir, outputdir })
+      globalpromise = sorter({ emitter, inputdir, outputdir, io })
       globalpromise.then(statistics => {
         db.run(
           'UPDATE recover SET percent=1, statistics=? WHERE id=?',
           [JSON.stringify(statistics), id]
         )
+        io.emit('end-sort')
       }).catch(err => {
         db.run(
           'UPDATE recover SET statistics=NULL WHERE id=?', [id]

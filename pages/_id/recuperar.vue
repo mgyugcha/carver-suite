@@ -299,13 +299,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .terminal {
   background: #000;
   font: 14px monospace;
   color: white;
   overflow: auto;
   width: 100%;
+  max-height: 500px;
   word-break: break-all;
   white-space: pre-wrap;
   margin-bottom: 20px;
