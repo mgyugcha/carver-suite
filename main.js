@@ -34,7 +34,10 @@ httpServer.listen(config.port, () => {
   const newWin = () => {
     checkDependencies()
     win = new electron.BrowserWindow({
-      icon: path.join(__dirname, '/static/icons/png/64x64.png')
+      icon: path.join(__dirname, '/static/icons/png/64x64.png'),
+      webPreferences: {
+        nodeIntegration: true
+      }
     })
     win.maximize()
     win.on('closed', () => win = null)
