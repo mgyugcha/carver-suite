@@ -1,16 +1,11 @@
 <template>
   <b-field>
     <p class="control">
-      <b-upload
-        v-model="file"
-        :required="!value"
-        webkitdirectory
-        @input="input"
-      >
-        <a class="button">
-          <b-icon icon="folder" />
-        </a>
-      </b-upload>
+      <b-button
+        title="Seleccionar carpeta"
+        icon-right="folder"
+        @click="leaveHer"
+      />
     </p>
     <b-input
       :value="value"
@@ -23,6 +18,8 @@
 </template>
 
 <script>
+const { dialog } = require('electron').remote
+
 export default {
   props: {
     value: { type: String, default: '' },
@@ -31,8 +28,12 @@ export default {
     file: undefined,
   }),
   methods: {
-    input () {
-      this.$emit('input', this.file ? this.file.path : '')
+    async leaveHer () {
+      const folder = await dialog.showOpenDialog({
+        properties: ['openDirectory', 'createDirectory']
+      })
+      this.$emit('input',
+        folder.filePaths.length === 0 ? undefined : folder.filePaths[0])
     },
   },
 }
