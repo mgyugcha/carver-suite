@@ -164,10 +164,10 @@ export default {
         await this.$store.dispatch('update', {
           id: this.$route.params.id, data: this.data
         })
-        this.$toast.open('Se guardó correctamente')
+        this.$buefy.toast.open('Se guardó correctamente')
         await this.$store.dispatch('refresh')
       } catch (err) {
-        this.$toast.open({ message: err.message, type: 'is-danger' })
+        this.$buefy.toast.open({ message: err.message, type: 'is-danger' })
       }
     },
   },

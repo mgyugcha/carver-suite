@@ -279,7 +279,7 @@ export default {
         await this.$axios.$post(`/api/projects/${this.id}/recover`, this.data)
         await this.$store.dispatch('refresh')
       } catch (err) {
-        this.$toast.open({ message: err.message, type: 'is-danger' })
+        this.$buefy.toast.open({ message: err.message, type: 'is-danger' })
         console.error(err)
       }
     },
@@ -287,12 +287,12 @@ export default {
       if (prevent && !confirm('¿Cancelar recuperación de datos?')) return
       try {
         await this.$axios.$delete(`/api/projects/${this.id}/recover`)
-        this.$toast.open('Se canceló la recuperación de datos')
+        this.$buefy.toast.open('Se canceló la recuperación de datos')
         this.running = false
         await this.$store.dispatch('refresh')
       } catch (err) {
         console.error(err)
-        this.$toast.open({ message: err.message, type: 'is-danger' })
+        this.$buefy.toast.open({ message: err.message, type: 'is-danger' })
       }
     }
   }

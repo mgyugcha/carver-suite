@@ -100,11 +100,11 @@ export default {
       try {
         this.data = await this.$axios.$get('/api/projects')
       } catch (err) {
-        this.$toast.open({ message: err.message, type: 'is-danger' })
+        this.$buefy.toast.open({ message: err.message, type: 'is-danger' })
       }
     },
     add () {
-      this.$dialog.prompt({
+      this.$buefy.dialog.prompt({
         type: 'is-dark',
         message: 'Nombre del proyecto',
         confirmText: 'Añadir',
@@ -118,18 +118,18 @@ export default {
         const { id } = await this.$axios.$post('/api/projects', { titulo })
         this.$router.push(`/${id}`)
       } catch (err) {
-        this.$toast.open({ message: err.message, type: 'is-danger' })
+        this.$buefy.toast.open({ message: err.message, type: 'is-danger' })
       }
     },
     remove (id) {
-      this.$dialog.confirm({
+      this.$buefy.dialog.confirm({
         message: '¿Eliminar proyecto?',
         onConfirm: async () => {
           try {
             await this.$axios.$delete(`/api/projects/${id}`)
             await this.init()
           } catch (err) {
-            this.$toast.open({ message: err.message, type: 'is-danger' })
+            this.$buefy.toast.open({ message: err.message, type: 'is-danger' })
           }
         }
       })

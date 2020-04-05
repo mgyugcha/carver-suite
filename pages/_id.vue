@@ -79,7 +79,7 @@ export default {
       await this.$store.dispatch('load', this.$route.params.id)
     } catch (err) {
       this.$router.push('/')
-      this.$toast.open({ message: err.response.data, type: 'is-danger' })
+      this.$buefy.toast.open({ message: err.response.data, type: 'is-danger' })
     }
   }
 }

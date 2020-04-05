@@ -230,12 +230,12 @@ export default {
     async submit () {
       try {
         this.running = true
-        this.$toast.open('Se está clasificando los archivos en segundo plano')
+        this.$buefy.toast.open('Se está clasificando los archivos en segundo plano')
         await this.$axios.$post(this.rest, this.data)
         this.percent = 0
         this.statistics = undefined
       } catch (err) {
-        this.$toast.open({ message: err.message, type: 'is-danger' })
+        this.$buefy.toast.open({ message: err.message, type: 'is-danger' })
         console.error(err)
       }
     },
@@ -243,12 +243,12 @@ export default {
       if (!confirm('¿Cancelar clasificación de archivos?')) return
       try {
         await this.$axios.$delete(this.rest)
-        this.$toast.open('Se canceló la clasificación de datos')
+        this.$buefy.toast.open('Se canceló la clasificación de datos')
         this.running = false
         await this.$store.dispatch('refresh')
       } catch (err) {
         console.error(err)
-        this.$toast.open({ message: err.message, type: 'is-danger' })
+        this.$buefy.toast.open({ message: err.message, type: 'is-danger' })
       }
     },
     async generarInforme () {
@@ -257,10 +257,10 @@ export default {
         const informe =
           await this.$axios.$post(`/api/projects/${this.id}/informe`, this.data)
         shell.openItem(informe)
-        this.$toast.open('El informe se generó correctamente')
+        this.$buefy.toast.open('El informe se generó correctamente')
       } catch (err) {
         console.error(err)
-        this.$toast.open({ message: err.message, type: 'is-danger' })
+        this.$buefy.toast.open({ message: err.message, type: 'is-danger' })
       } finally {
         this.runningInforme = false
       }
