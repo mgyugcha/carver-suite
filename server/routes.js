@@ -131,6 +131,7 @@ WHERE id=?`
         child.stdout.on('data', manager)
         child.stderr.on('data', manager)
         child.on('close', code => {
+          output += '\n\n\t\tCarvers Suite: Proceso terminado.'
           db.run(
             'UPDATE recover SET code=?, stdout=?, pid=NULL WHERE id=?',
             [code, output, id]

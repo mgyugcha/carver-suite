@@ -156,6 +156,7 @@
           v-if="running"
           class="button is-danger"
           type="button"
+          :disabled="disableCancel"
           @click="remove(true)"
         >
           Cancelar recuperación de datos
@@ -228,6 +229,7 @@ export default {
   transition: 'zoom',
   data: () => ({
     showHelp: false,
+    disableCancel: false,
     options: {
       carvers: [],
       drives: [],
@@ -255,6 +257,7 @@ export default {
       this.message = msg
     }).on('end', async () => {
       this.running = false
+      this.disableCancel = false
       await this.$store.dispatch('refresh')
       if (!this.runningHasProblems) {
         alert('Se recuperó los archivos correctamente. Procediendo a clasificar.')
@@ -286,9 +289,9 @@ export default {
     async remove (prevent = false) {
       if (prevent && !confirm('¿Cancelar recuperación de datos?')) return
       try {
+        this.disableCancel = true
         await this.$axios.$delete(`/api/projects/${this.id}/recover`)
-        this.$buefy.toast.open('Se canceló la recuperación de datos')
-        this.running = false
+        this.$buefy.toast.open('Cancelando recuperación de datos')
         await this.$store.dispatch('refresh')
       } catch (err) {
         console.error(err)

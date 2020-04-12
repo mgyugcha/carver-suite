@@ -1,7 +1,6 @@
-const electron = require('electron')
-const { dialog } = require('electron')
 const path = require('path')
 const http = require('http')
+const { app: appElectron, BrowserWindow, dialog } = require('electron')
 const commandExists = require('command-exists').sync
 const appServer = require('express')()
 const bodyParser = require('body-parser')
@@ -29,11 +28,10 @@ appServer.use('/api', routes(io))
 appServer.use(nuxt.render)
 httpServer.listen(config.port, () => {
   console.log('api corriendo por el puerto', config.port)
-  const app = electron.app
   let win = null // Current window
   const newWin = () => {
     checkDependencies()
-    win = new electron.BrowserWindow({
+    win = new BrowserWindow({
       icon: path.join(__dirname, '/static/icons/png/64x64.png'),
       webPreferences: {
         nodeIntegration: true
@@ -42,11 +40,11 @@ httpServer.listen(config.port, () => {
     win.maximize()
     win.on('closed', () => win = null)
     if (config.dev) {
-      const { default: installExtension, VUEJS_DEVTOOLS } =
-            require('electron-devtools-installer')
-      installExtension(VUEJS_DEVTOOLS.id).then(name => {
-        win.webContents.openDevTools()
-      }).catch(err => console.log('An error occurred: ', err))
+      // const { default: installExtension, VUEJS_DEVTOOLS } =
+      //       require('electron-devtools-installer')
+      // installExtension(VUEJS_DEVTOOLS.id).then(name => {
+      //   win.webContents.openDevTools()
+      // }).catch(err => console.log('An error occurred: ', err))
     }
     const pollServer = () => {
       http.get(_NUXT_URL_, res => {
@@ -56,9 +54,8 @@ httpServer.listen(config.port, () => {
     }
     pollServer()
   }
-  app.on('ready', newWin)
-  app.on('window-all-closed', () => app.quit())
-  app.on('activate', () => win === null && newWin())
+  appElectron.whenReady().then(newWin)
+  appElectron.on('window-all-closed', () => appElectron.quit())
 })
 
 function checkDependencies () {
@@ -87,8 +84,9 @@ function checkDependencies () {
       buttons: ['Entiendo'],
       detail: dependencias,
       message: 'Problemas con las dependencias',
+    }).then(() => {
+      process.exit(1)
     })
     console.error(dependencias)
-    process.exit(1)
   }
 }
