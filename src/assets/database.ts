@@ -1,6 +1,6 @@
-import { resolve as resolvePath } from "path";
-import { app } from "electron";
-import { Database, verbose } from "sqlite3";
+import { app } from 'electron'
+import { Database, verbose } from 'sqlite3'
+import { resolve as resolvePath } from 'path'
 
 const sqlGenerador = `\
 CREATE TABLE IF NOT EXISTS recover (
@@ -37,32 +37,32 @@ CREATE TABLE IF NOT EXISTS recover (
   percent REAL DEFAULT 0, 
   statistics TEXT
 )
-`;
+`
 
-const sqlite3 = verbose();
-let db: Database;
+const sqlite3 = verbose()
+let db: Database
 
 const cargarTabla = () =>
   new Promise<void>((resolve, reject) => {
-    console.info("creando tabla");
+    console.info('creando tabla')
     db.run(sqlGenerador, (err) => {
       if (err) {
-        console.error("Ocurrió error");
-        return reject(err);
+        console.error('Ocurrió error')
+        return reject(err)
       }
-      resolve();
-    });
-  });
+      resolve()
+    })
+  })
 
 export const getDatabase = async (): Promise<Database> => {
-  if (db) return db;
+  if (db) return db
   // cargar base de datos
-  const dbPath = resolvePath(app.getPath("userData"), "database.db");
-  console.info("cargando base de datos en:", dbPath);
-  db = new sqlite3.Database(dbPath);
+  const dbPath = resolvePath(app.getPath('userData'), 'database.db')
+  console.info('cargando base de datos en:', dbPath)
+  db = new sqlite3.Database(dbPath)
   // cargando tabla
-  await cargarTabla();
-  return db!;
-};
+  await cargarTabla()
+  return db!
+}
 
-export default db!;
+export default db!

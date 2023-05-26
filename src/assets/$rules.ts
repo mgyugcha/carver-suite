@@ -1,15 +1,15 @@
-import { Rule } from "antd/lib/form";
+import { Rule } from 'antd/lib/form'
 
 const pattern = (
   patron: RegExp,
-  message = "No se cumple el formato requerido"
+  message = 'No se cumple el formato requerido'
 ): Rule => ({
   pattern: patron,
   message,
-});
+})
 
 const $rules = {
-  required: (message = "El campo es requerido"): Rule => ({
+  required: (message = 'El campo es requerido'): Rule => ({
     required: true,
     message,
   }),
@@ -27,11 +27,11 @@ const $rules = {
     max: length,
     message,
   }),
-  email: (message = "El correo electrónico no es válido"): Rule => ({
-    type: "email",
+  email: (message = 'El correo electrónico no es válido'): Rule => ({
+    type: 'email',
     message,
   }),
   pattern,
-};
+}
 
-export default $rules;
+export default $rules

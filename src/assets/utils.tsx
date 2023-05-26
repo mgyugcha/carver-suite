@@ -1,39 +1,39 @@
-import { App } from "antd";
-import { AxiosError } from "axios";
+import { App } from 'antd'
+import { AxiosError } from 'axios'
 
 export async function getMensajeError(err: any) {
   const result: string | Blob = err.response?.data
     ? err.response.data?.message || err.response.data
-    : err.message;
+    : err.message
   if (result instanceof Blob) {
     try {
-      const error = JSON.parse(await result.text());
-      return error.message;
+      const error = JSON.parse(await result.text())
+      return error.message
     } catch {
-      return result.text();
+      return result.text()
     }
   }
-  return result;
+  return result
 }
 
 export function useUtils() {
-  const { modal } = App.useApp();
+  const { modal } = App.useApp()
 
   const showError = async (
     err: unknown,
-    { title = "Proceso fallido" } = {}
+    { title = 'Proceso fallido' } = {}
   ) => {
-    const content = await getMensajeError(err as AxiosError);
-    console.error(err);
+    const content = await getMensajeError(err as AxiosError)
+    console.error(err)
     modal.error({
       title,
       width: 450,
       content: content,
-      okType: "danger",
-    });
-  };
+      okType: 'danger',
+    })
+  }
 
   return {
     showError,
-  };
+  }
 }

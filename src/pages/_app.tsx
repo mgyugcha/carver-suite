@@ -1,7 +1,7 @@
-import "@/styles/globals.css";
-import { ConfigProvider, Layout, App } from "antd";
-import type { AppProps } from "next/app";
-import { StyleProvider } from "@ant-design/cssinjs";
+import '@/styles/globals.css'
+import type { AppProps } from 'next/app'
+import { ConfigProvider, Layout, App } from 'antd'
+import { StyleProvider } from '@ant-design/cssinjs'
 
 export default function _App({ Component, pageProps }: AppProps) {
   return (
@@ -18,5 +18,5 @@ export default function _App({ Component, pageProps }: AppProps) {
         </StyleProvider>
       </App>
     </ConfigProvider>
-  );
+  )
 }

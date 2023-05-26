@@ -1,58 +1,58 @@
-import axios from "axios";
-import dayjs from "dayjs";
-import Link from "next/link";
-import $rules from "@/assets/$rules";
-import { useRouter } from "next/router";
-import { useUtils } from "@/assets/utils";
-import { Project } from "@/types/Projects";
-import { useEffect, useState } from "react";
-import { Button, DatePicker, Form, Input, Space, Typography, App } from "antd";
+import axios from 'axios'
+import dayjs from 'dayjs'
+import Link from 'next/link'
+import $rules from '@/assets/$rules'
+import { useRouter } from 'next/router'
+import { useUtils } from '@/assets/utils'
+import { Project } from '@/types/Projects'
+import { useEffect, useState } from 'react'
+import { Button, DatePicker, Form, Input, Space, Typography, App } from 'antd'
 
-const endpoint = "/api/projects";
+const endpoint = '/api/projects'
 
 export default function Proyecto() {
-  const router = useRouter();
-  const { showError } = useUtils();
-  const [form] = Form.useForm();
-  const { message } = App.useApp();
-  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter()
+  const { showError } = useUtils()
+  const [form] = Form.useForm()
+  const { message } = App.useApp()
+  const [isLoading, setIsLoading] = useState(false)
 
   const init = async () => {
     try {
       const { data: project } = await axios.get(endpoint, {
         params: { id: router.query.id },
-      });
+      })
       if (project.fechaDeIngreso)
-        project.fechaDeIngreso = dayjs(project.fechaDeIngreso);
+        project.fechaDeIngreso = dayjs(project.fechaDeIngreso)
       if (project.horaDeIngreso)
-        project.horaDeIngreso = dayjs(project.horaDeIngreso);
+        project.horaDeIngreso = dayjs(project.horaDeIngreso)
       if (project.fechaDeEntrega)
-        project.fechaDeEntrega = dayjs(project.fechaDeEntrega);
+        project.fechaDeEntrega = dayjs(project.fechaDeEntrega)
       if (project.horaDeEntrega)
-        project.horaDeEntrega = dayjs(project.horaDeEntrega);
-      form.setFieldsValue(project);
+        project.horaDeEntrega = dayjs(project.horaDeEntrega)
+      form.setFieldsValue(project)
     } catch (err) {
-      showError(err);
+      showError(err)
     }
-  };
+  }
 
   const onSubmit = async (data: Project) => {
-    setIsLoading(true);
-    if (isLoading) return;
+    setIsLoading(true)
+    if (isLoading) return
     try {
       await axios.put(endpoint, data, {
         params: { id: router.query.id },
-      });
-      message.success("Guardado correctamente");
+      })
+      message.success('Guardado correctamente')
     } catch (err) {
-      showError(err);
+      showError(err)
     }
-    setIsLoading(false);
-  };
+    setIsLoading(false)
+  }
 
   useEffect(() => {
-    init();
-  }, []);
+    init()
+  }, [])
 
   return (
     <>
@@ -138,5 +138,5 @@ export default function Proyecto() {
         </Form.Item>
       </Form>
     </>
-  );
+  )
 }
