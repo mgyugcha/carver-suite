@@ -22,8 +22,17 @@ export default async function handler(
     const sql = "SELECT id, titulo FROM recover";
     await new Promise<void>((resolve, reject) => {
       db.all<Project>(sql, (error, rows) => {
-        if (error) reject(error);
+        if (error) return reject(error);
         res.status(200).json(rows || []);
+        resolve();
+      });
+    });
+  } else if (req.method === "DELETE") {
+    const sql = "DELETE FROM recover WHERE id=?";
+    await new Promise<void>((resolve, reject) => {
+      db.run(sql, [req.query.id], (error) => {
+        if (error) return reject(error);
+        res.send("success");
         resolve();
       });
     });

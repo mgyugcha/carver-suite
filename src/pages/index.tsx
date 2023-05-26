@@ -1,10 +1,22 @@
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import { Button, Form, Input, Modal, Table, Typography } from "antd";
-import { useEffect, useState } from "react";
-import $rules from "@/assets/$rules";
-import { useUtils } from "@/assets/utils";
 import axios from "axios";
+import Link from "next/link";
+import $rules from "@/assets/$rules";
+import { Inter } from "next/font/google";
+import { useUtils } from "@/assets/utils";
+import { Project } from "@/types/Projects";
+import { useEffect, useState } from "react";
+import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
+import {
+  Button,
+  Form,
+  Input,
+  Modal,
+  Popconfirm,
+  Space,
+  Table,
+  Typography,
+} from "antd";
+import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,27 +24,25 @@ export default function Home() {
   const { showError } = useUtils();
   const [abrirModal, setAbrirModal] = useState(false);
   const [form] = Form.useForm();
-  const [datos, setDatos] = useState([]);
+  const router = useRouter();
+  const [datos, setDatos] = useState<Project[]>([]);
 
   const init = async () => {
     const { data } = await axios.get("/api/projects");
-    console.log("asd", data);
     setDatos(data);
   };
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: Project) => {
     try {
-      console.log("esto", values);
-      // const { data } = await axios.post("/api/projects", values);
-      form.resetFields()
-      // await init();
+      const { data } = await axios.post<Project>("/api/projects", values);
+      form.resetFields();
+      router.push("/" + data.id);
     } catch (err) {
       showError(err);
     }
   };
 
   useEffect(() => {
-    console.log("prrueabs");
     init();
   }, []);
 
@@ -69,8 +79,37 @@ export default function Home() {
         dataSource={datos}
         rowKey="id"
         columns={[
-          { title: "Identificador", dataIndex: "id" },
+          { title: "Identificador", align: "right", dataIndex: "id" },
           { title: "Título", dataIndex: "titulo" },
+          {
+            align: "center",
+            width: 1,
+            render: (_, row) => (
+              <Space.Compact size="small">
+                <Link href={"/" + row.id}>
+                  <Button title="Ver proyecto" icon={<EyeOutlined />} />
+                </Link>
+                <Popconfirm
+                  title="Eliminar proyecto"
+                  description="¿Seguro que desea eliminar?"
+                  onConfirm={async () => {
+                    try {
+                      await axios.delete("/api/projects", {
+                        params: { id: row.id },
+                      });
+                      await init();
+                    } catch (err) {
+                      showError(err);
+                    }
+                  }}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Button title="Eliminar" icon={<DeleteOutlined />} />
+                </Popconfirm>
+              </Space.Compact>
+            ),
+          },
         ]}
       />
     </div>
