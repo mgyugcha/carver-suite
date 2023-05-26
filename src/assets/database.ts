@@ -62,7 +62,5 @@ export const getDatabase = async (): Promise<Database> => {
   db = new sqlite3.Database(dbPath)
   // cargando tabla
   await cargarTabla()
-  return db!
+  return db
 }
-
-export default db!

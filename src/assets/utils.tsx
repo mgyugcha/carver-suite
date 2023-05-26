@@ -1,6 +1,7 @@
 import { App } from 'antd'
 import { AxiosError } from 'axios'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function getMensajeError(err: any) {
   const result: string | Blob = err.response?.data
     ? err.response.data?.message || err.response.data
