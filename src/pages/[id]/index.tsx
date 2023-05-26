@@ -6,11 +6,13 @@ import { useRouter } from 'next/router'
 import { useUtils } from '@/assets/utils'
 import { Project } from '@/types/Projects'
 import { useEffect, useState } from 'react'
+import type { NextPageWithLayout } from '../_app'
+import ProyectoLayout from '@/components/layouts/Proyecto'
 import { Button, DatePicker, Form, Input, Space, Typography, App } from 'antd'
 
 const endpoint = '/api/projects'
 
-export default function Proyecto() {
+const ProyectoPage: NextPageWithLayout = () => {
   const router = useRouter()
   const { showError } = useUtils()
   const [form] = Form.useForm()
@@ -140,3 +142,7 @@ export default function Proyecto() {
     </>
   )
 }
+
+ProyectoPage.getLayout = ProyectoLayout
+
+export default ProyectoPage
