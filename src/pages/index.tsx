@@ -49,9 +49,9 @@ export default function Home() {
   return (
     <div>
       <Modal
-        title="Agregar proyecto"
+        title="Insertar"
         open={abrirModal}
-        width={450}
+        width={400}
         onOk={() => form.submit()}
         onCancel={() => setAbrirModal(false)}
       >
@@ -79,7 +79,7 @@ export default function Home() {
         dataSource={datos}
         rowKey="id"
         columns={[
-          { title: "Identificador", align: "right", dataIndex: "id" },
+          { title: "ID", align: "right", dataIndex: "id" },
           { title: "Título", dataIndex: "titulo" },
           {
             align: "center",
