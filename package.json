@@ -16,7 +16,6 @@
     "antd": "^5.5.1",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
-    "eslint": "8.41.0",
     "eslint-config-next": "13.4.4",
     "next": "13.4.4",
     "postcss": "8.4.23",
@@ -27,6 +26,10 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
-    "electron": "^24.4.0"
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "@typescript-eslint/parser": "^5.59.7",
+    "electron": "^24.4.0",
+    "eslint": "^8.41.0",
+    "eslint-plugin-react": "^7.32.2"
   }
 }
