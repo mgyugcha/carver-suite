@@ -8,19 +8,15 @@ const ProyectoLayout: AppLayout = (page) => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Layout.Sider
-      // collapsed={collapsed}
-      // onCollapse={(value) => setCollapsed(value)}
-      >
+      <Layout.Header className="flex items-center !bg-white sticky top-0 z-50">
         <div className="demo-logo-vertical" />
         <Menu
-          theme="dark"
-          defaultSelectedKeys={['1']}
-          mode="inline"
+          mode="horizontal"
+          defaultSelectedKeys={['informacion']}
           items={[
             {
               key: 'informacion',
-              label: 'Información',
+              label: <Link href={'/' + router.query.id}>Información</Link>,
             },
             {
               key: 'formulario',
@@ -42,9 +38,11 @@ const ProyectoLayout: AppLayout = (page) => {
             },
           ]}
         />
-      </Layout.Sider>
+      </Layout.Header>
 
-      <Layout className="px-14 py-5">{page}</Layout>
+      <Layout>
+        <div className="w-[720px] mx-auto py-16">{page}</div>
+      </Layout>
     </Layout>
   )
 }

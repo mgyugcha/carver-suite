@@ -1,9 +1,10 @@
+import Head from 'next/head'
 import '@/styles/globals.css'
 import esEs from 'antd/locale/es_ES'
+import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import { ConfigProvider, Layout, App } from 'antd'
 import { StyleProvider } from '@ant-design/cssinjs'
-import type { NextPage } from 'next'
 import type { ReactElement, ReactNode } from 'react'
 
 export type AppLayout = (page: ReactElement) => ReactNode
@@ -21,18 +22,23 @@ export default function _App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout =
     Component.getLayout ??
     ((page) => (
-      <Layout>
+      <Layout style={{ minHeight: '100vh' }}>
         <Layout.Content className="p-14">{page}</Layout.Content>
       </Layout>
     ))
 
   return (
-    <ConfigProvider locale={esEs}>
-      <App>
-        <StyleProvider hashPriority="high">
-          {getLayout(<Component {...pageProps} />)}
-        </StyleProvider>
-      </App>
-    </ConfigProvider>
+    <div>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
+      <ConfigProvider locale={esEs}>
+        <App>
+          <StyleProvider hashPriority="high">
+            {getLayout(<Component {...pageProps} />)}
+          </StyleProvider>
+        </App>
+      </ConfigProvider>
+    </div>
   )
 }

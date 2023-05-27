@@ -54,7 +54,6 @@ const FormularioPage: NextPageWithLayout = () => {
     let valorscalpel = 0
 
     if (seleccionado && seleccionado1) {
-      console.log(Pesos.inferir2(seleccionado, seleccionado1))
       valorfores = parseFloat(
         (Pesos.inferir2(seleccionado, seleccionado1).valorF * 100).toFixed(2)
       )
@@ -62,7 +61,6 @@ const FormularioPage: NextPageWithLayout = () => {
         (Pesos.inferir2(seleccionado, seleccionado1).valorS * 100).toFixed(2)
       )
     } else if (seleccionado && seleccionado2) {
-      console.log(Pesos.inferir2(seleccionado, seleccionado2))
       valorfores = parseFloat(
         (Pesos.inferir2(seleccionado, seleccionado2).valorF * 100).toFixed(2)
       )
@@ -70,7 +68,6 @@ const FormularioPage: NextPageWithLayout = () => {
         (Pesos.inferir2(seleccionado, seleccionado2).valorS * 100).toFixed(2)
       )
     } else if (seleccionado && seleccionado3) {
-      console.log(Pesos.inferir2(seleccionado, seleccionado3))
       valorfores = parseFloat(
         (Pesos.inferir2(seleccionado, seleccionado3).valorF * 100).toFixed(2)
       )
@@ -78,7 +75,6 @@ const FormularioPage: NextPageWithLayout = () => {
         (Pesos.inferir2(seleccionado, seleccionado3).valorS * 100).toFixed(2)
       )
     } else if (seleccionado && seleccionado4) {
-      console.log(Pesos.inferir2(seleccionado, seleccionado4))
       valorfores = parseFloat(
         (Pesos.inferir2(seleccionado, seleccionado4).valorF * 100).toFixed(2)
       )
@@ -86,7 +82,6 @@ const FormularioPage: NextPageWithLayout = () => {
         (Pesos.inferir2(seleccionado, seleccionado4).valorS * 100).toFixed(2)
       )
     } else if (seleccionado1 && seleccionado2) {
-      console.log(Pesos.inferir2(seleccionado1, seleccionado2))
       valorfores = parseFloat(
         (Pesos.inferir2(seleccionado1, seleccionado2).valorF * 100).toFixed(2)
       )
@@ -94,17 +89,13 @@ const FormularioPage: NextPageWithLayout = () => {
         (Pesos.inferir2(seleccionado1, seleccionado2).valorS * 100).toFixed(2)
       )
     } else if (seleccionado1 && seleccionado3) {
-      console.log(Pesos.inferir2(seleccionado1, seleccionado3))
       valorfores = parseFloat(
         (Pesos.inferir2(seleccionado1, seleccionado3).valorF * 100).toFixed(2)
       )
       valorscalpel = parseFloat(
         (Pesos.inferir2(seleccionado1, seleccionado3).valorS * 100).toFixed(2)
       )
-    } else if (seleccionado1 && seleccionado4) {
-      console.log(Pesos.inferir2(seleccionado1, seleccionado4))
     } else if (seleccionado2 && seleccionado3) {
-      console.log(Pesos.inferir2(seleccionado2, seleccionado3))
       valorfores = parseFloat(
         (Pesos.inferir2(seleccionado2, seleccionado3).valorF * 100).toFixed(2)
       )
@@ -112,7 +103,6 @@ const FormularioPage: NextPageWithLayout = () => {
         (Pesos.inferir2(seleccionado2, seleccionado3).valorS * 100).toFixed(2)
       )
     } else if (seleccionado2 && seleccionado4) {
-      console.log(Pesos.inferir2(seleccionado2, seleccionado4))
       valorfores = parseFloat(
         (Pesos.inferir2(seleccionado2, seleccionado4).valorF * 100).toFixed(2)
       )
@@ -120,7 +110,6 @@ const FormularioPage: NextPageWithLayout = () => {
         (Pesos.inferir2(seleccionado2, seleccionado4).valorS * 100).toFixed(2)
       )
     } else if (seleccionado3 && seleccionado4) {
-      console.log(Pesos.inferir2(seleccionado3, seleccionado4))
       valorfores = parseFloat(
         (Pesos.inferir2(seleccionado3, seleccionado4).valorF * 100).toFixed(2)
       )
@@ -128,7 +117,6 @@ const FormularioPage: NextPageWithLayout = () => {
         (Pesos.inferir2(seleccionado3, seleccionado4).valorS * 100).toFixed(2)
       )
     } else if (seleccionado && seleccionado1 && seleccionado2) {
-      console.log(Pesos.inferir3(seleccionado, seleccionado1, seleccionado2))
       valorfores = parseFloat(
         (
           Pesos.inferir3(seleccionado, seleccionado1, seleccionado2).valorF *
@@ -142,7 +130,6 @@ const FormularioPage: NextPageWithLayout = () => {
         ).toFixed(2)
       )
     } else if (seleccionado && seleccionado1 && seleccionado3) {
-      console.log(Pesos.inferir3(seleccionado, seleccionado1, seleccionado3))
       valorfores = parseFloat(
         (
           Pesos.inferir3(seleccionado, seleccionado1, seleccionado3).valorF *
@@ -156,7 +143,6 @@ const FormularioPage: NextPageWithLayout = () => {
         ).toFixed(2)
       )
     } else if (seleccionado && seleccionado1 && seleccionado4) {
-      console.log(Pesos.inferir3(seleccionado, seleccionado1, seleccionado4))
       valorfores = parseFloat(
         (
           Pesos.inferir3(seleccionado, seleccionado1, seleccionado4).valorF *
@@ -170,7 +156,6 @@ const FormularioPage: NextPageWithLayout = () => {
         ).toFixed(2)
       )
     } else if (seleccionado1 && seleccionado2 && seleccionado3) {
-      console.log(Pesos.inferir3(seleccionado1, seleccionado2, seleccionado3))
       valorfores = parseFloat(
         (
           Pesos.inferir3(seleccionado1, seleccionado2, seleccionado3).valorF *
@@ -184,7 +169,6 @@ const FormularioPage: NextPageWithLayout = () => {
         ).toFixed(2)
       )
     } else if (seleccionado1 && seleccionado2 && seleccionado4) {
-      console.log(Pesos.inferir3(seleccionado1, seleccionado2, seleccionado4))
       valorfores = parseFloat(
         (
           Pesos.inferir3(seleccionado1, seleccionado2, seleccionado4).valorF *
@@ -198,7 +182,6 @@ const FormularioPage: NextPageWithLayout = () => {
         ).toFixed(2)
       )
     } else if (seleccionado2 && seleccionado3 && seleccionado4) {
-      console.log(Pesos.inferir3(seleccionado2, seleccionado3, seleccionado4))
       valorfores = parseFloat(
         (
           Pesos.inferir3(seleccionado2, seleccionado3, seleccionado4).valorF *
@@ -217,14 +200,6 @@ const FormularioPage: NextPageWithLayout = () => {
       seleccionado2 &&
       seleccionado3
     ) {
-      console.log(
-        Pesos.inferir4(
-          seleccionado,
-          seleccionado1,
-          seleccionado2,
-          seleccionado3
-        )
-      )
       valorfores = parseFloat(
         (
           Pesos.inferir4(
@@ -251,14 +226,6 @@ const FormularioPage: NextPageWithLayout = () => {
       seleccionado2 &&
       seleccionado4
     ) {
-      console.log(
-        Pesos.inferir4(
-          seleccionado,
-          seleccionado1,
-          seleccionado2,
-          seleccionado4
-        )
-      )
       valorfores = parseFloat(
         (
           Pesos.inferir4(
@@ -285,14 +252,6 @@ const FormularioPage: NextPageWithLayout = () => {
       seleccionado3 &&
       seleccionado4
     ) {
-      console.log(
-        Pesos.inferir4(
-          seleccionado1,
-          seleccionado2,
-          seleccionado3,
-          seleccionado4
-        )
-      )
       valorfores = parseFloat(
         (
           Pesos.inferir4(
@@ -320,15 +279,6 @@ const FormularioPage: NextPageWithLayout = () => {
       seleccionado3 &&
       seleccionado4
     ) {
-      console.log(
-        Pesos.inferir5(
-          seleccionado,
-          seleccionado1,
-          seleccionado2,
-          seleccionado3,
-          seleccionado4
-        )
-      )
       valorfores = parseFloat(
         (
           Pesos.inferir5(
@@ -352,7 +302,6 @@ const FormularioPage: NextPageWithLayout = () => {
         ).toFixed(2)
       )
     } else if (seleccionado) {
-      console.log(Pesos.inferir(seleccionado))
       valorfores = parseFloat(
         (Pesos.inferir(seleccionado).valorF * 100).toFixed(2)
       )
@@ -360,7 +309,6 @@ const FormularioPage: NextPageWithLayout = () => {
         (Pesos.inferir(seleccionado).valorS * 100).toFixed(2)
       )
     } else if (seleccionado1) {
-      console.log(Pesos.inferir(seleccionado1))
       valorfores = parseFloat(
         (Pesos.inferir(seleccionado1).valorF * 100).toFixed(2)
       )
@@ -368,7 +316,6 @@ const FormularioPage: NextPageWithLayout = () => {
         (Pesos.inferir(seleccionado1).valorS * 100).toFixed(2)
       )
     } else if (seleccionado2) {
-      console.log(Pesos.inferir(seleccionado2))
       valorfores = parseFloat(
         (Pesos.inferir(seleccionado2).valorF * 100).toFixed(2)
       )
@@ -376,7 +323,6 @@ const FormularioPage: NextPageWithLayout = () => {
         (Pesos.inferir(seleccionado2).valorS * 100).toFixed(2)
       )
     } else if (seleccionado3) {
-      console.log(Pesos.inferir(seleccionado3))
       valorfores = parseFloat(
         (Pesos.inferir(seleccionado3).valorF * 100).toFixed(2)
       )
@@ -384,7 +330,6 @@ const FormularioPage: NextPageWithLayout = () => {
         (Pesos.inferir(seleccionado3).valorS * 100).toFixed(2)
       )
     } else if (seleccionado4) {
-      console.log(Pesos.inferir(seleccionado4))
       valorfores = parseFloat(
         (Pesos.inferir(seleccionado4).valorF * 100).toFixed(2)
       )
@@ -399,7 +344,7 @@ const FormularioPage: NextPageWithLayout = () => {
   return (
     <div>
       <Typography.Title>Formulario</Typography.Title>
-      <Typography.Paragraph>
+      <Typography.Paragraph type="secondary" className="!mb-10">
         Contestar el siguiente formulario le ayudará a identificar cuál es el{' '}
         <b>carver</b> que puede recuperar la mayor cantidad de datos de acuerdo
         al tipo de daño del dispositivo de almacenamiento.

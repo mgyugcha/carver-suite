@@ -59,7 +59,7 @@ const ProyectoPage: NextPageWithLayout = () => {
   return (
     <>
       <Typography.Title>Proyecto #{router.query.id}</Typography.Title>
-      <Typography.Paragraph type="secondary">
+      <Typography.Paragraph type="secondary" className="!mb-10">
         Ingrese el título del proyecto, los datos de ingreso y cuando el proceso
         de clasificación de datos haya terminado puede llenar los datos de
         entrega. Esta información servirá para generar un <b>informe</b> al
@@ -69,15 +69,15 @@ const ProyectoPage: NextPageWithLayout = () => {
       <Form
         form={form}
         layout="horizontal"
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 6 }}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
         onFinish={onSubmit}
       >
         <Form.Item label="Título" rules={[$rules.required()]} name="titulo">
           <Input placeholder="Ingrese el título del proyecto" />
         </Form.Item>
 
-        <Typography.Title level={4}>Datos de ingreso</Typography.Title>
+        <Typography.Title level={2}>Datos de ingreso</Typography.Title>
 
         <Form.Item label="Nombre del propietario" name="propietario">
           <Input placeholder="Ingrese el nombre del propietario" />
@@ -104,7 +104,7 @@ const ProyectoPage: NextPageWithLayout = () => {
           />
         </Form.Item>
 
-        <Typography.Title level={4}>Datos de entrega</Typography.Title>
+        <Typography.Title level={2}>Datos de entrega</Typography.Title>
 
         <Form.Item label="Nombre del especialista" name="especialista">
           <Input placeholder="Especialista que atendió el requerimiento" />
@@ -128,7 +128,7 @@ const ProyectoPage: NextPageWithLayout = () => {
           />
         </Form.Item>
 
-        <Form.Item wrapperCol={{ offset: 6, span: 8 }}>
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Space>
             <Button type="primary" htmlType="submit" loading={isLoading}>
               Guardar
