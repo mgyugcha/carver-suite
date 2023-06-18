@@ -26,7 +26,11 @@ const ProyectoLayout: AppLayout = (page) => {
             },
             {
               key: 'recuperar',
-              label: 'Recuperar archivos',
+              label: (
+                <Link href={'/' + router.query.id + '/recuperar'}>
+                  Recuperar archivos
+                </Link>
+              ),
             },
             {
               key: 'clasificar',

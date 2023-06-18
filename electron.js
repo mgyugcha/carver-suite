@@ -45,11 +45,11 @@ function createWindow() {
     const server = createServer((req, res) => {
       // si recibimos una petición por fuera de Electron
       // respondemos con un 404
-      if (req.headers['user-agent'].indexOf('Electron') === -1) {
-        res.writeHead(404)
-        res.end()
-        return
-      }
+      // if (req.headers['user-agent'].indexOf('Electron') === -1) {
+      //   res.writeHead(404)
+      //   res.end()
+      //   return
+      // }
 
       res.setHeader('Access-Control-Request-Method', 'GET')
 
